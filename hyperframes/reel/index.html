@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1200, height=1000" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=JetBrains+Mono:wght@500&display=swap" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1200px; height: 1000px; overflow: hidden; background: #0f1430; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; color: #eef1fb; font-family: "JetBrains Mono", monospace; }
+      .layer { position: absolute; inset: 0; }
+      #glow { background:
+        radial-gradient(560px 480px at 600px 500px, rgba(84,104,255,.24), transparent 70%),
+        radial-gradient(420px 380px at 1100px 950px, rgba(232,163,47,.10), transparent 70%); }
+      #grid { left: -60px; width: 1320px;
+        background-image: radial-gradient(rgba(170,182,255,.16) 1.4px, transparent 1.6px); background-size: 60px 60px; }
+      svg.stage { position: absolute; left: 0; top: 0; width: 1200px; height: 1000px; }
+      .scene { opacity: 0; }
+      .cap { position: absolute; left: 70px; bottom: 64px; font-size: 22px; letter-spacing: .18em; color: #aab4e8; }
+      .cap b { color: #f0b24a; font-weight: 500; }
+      .tool { position: absolute; transform: translate(-50%, -50%); padding: 16px 26px; border-radius: 16px;
+        background: #1b2250; border: 2px solid #3b4690; font-size: 26px; color: #dfe4ff; white-space: nowrap; }
+      .core { position: absolute; transform: translate(-50%, -50%); width: 176px; height: 176px; border-radius: 44px;
+        background: #5468ff; display: grid; place-items: center; font-family: "Bricolage Grotesque", sans-serif;
+        font-weight: 700; font-size: 54px; color: #fff; box-shadow: 0 0 70px rgba(84,104,255,.5); }
+      .ring { position: absolute; transform: translate(-50%, -50%); border-radius: 44px; border: 3px solid #8c9bff; opacity: 0; }
+      .pk { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; background: #f0b24a;
+        box-shadow: 0 0 0 7px rgba(240,178,74,.18); opacity: 0; }
+      .doc { position: absolute; width: 200px; height: 88px; border-radius: 12px; background: #1b2250; border: 2px solid #3b4690; padding: 18px 20px; }
+      .doc i { display: block; height: 8px; border-radius: 4px; background: #4a5598; margin-bottom: 10px; }
+      .bar { position: absolute; bottom: 0; width: 46px; border-radius: 6px 6px 0 0; transform-origin: 50% 100%; }
+      .bar.l { background: #8c9bff; } .bar.h { background: transparent; border: 3px solid #f0b24a; border-bottom: 0; }
+      #chart { position: absolute; left: 790px; top: 300px; width: 330px; height: 380px; border-bottom: 2px solid #4a5598; }
+      .key { position: absolute; font-size: 20px; letter-spacing: .12em; color: #c9d0ef; }
+      .key span { display: inline-block; width: 18px; height: 18px; border-radius: 4px; margin-right: 10px; vertical-align: -2px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="12" data-width="1200" data-height="1000">
+      <div id="glow" class="layer clip" data-start="0" data-duration="12"></div>
+      <div id="grid" class="layer clip" data-start="0" data-duration="12"></div>
+
+      <!-- Scene A: an agent calling tools -->
+      <div id="s0" class="layer scene clip" data-start="0" data-duration="12">
+        <svg class="stage" viewBox="0 0 1200 1000" id="s0wires"></svg>
+        <div id="s0ring" class="ring" style="left:420px;top:500px;width:176px;height:176px"></div>
+        <div class="core" style="left:420px;top:500px">AI</div>
+        <div id="s0tools"></div>
+        <div id="s0pk"></div>
+        <div class="cap"><b>01</b> &nbsp;AN AGENT CALLING ITS TOOLS</div>
+      </div>
+
+      <!-- Scene B: a classifier learning a boundary -->
+      <div id="s1" class="layer scene clip" data-start="0" data-duration="12">
+        <svg class="stage" viewBox="0 0 1200 1000" id="s1svg"></svg>
+        <div class="cap"><b>02</b> &nbsp;A MODEL LEARNING A DECISION BOUNDARY</div>
+      </div>
+
+      <!-- Scene C: LLM as a research instrument -->
+      <div id="s2" class="layer scene clip" data-start="0" data-duration="12">
+        <svg class="stage" viewBox="0 0 1200 1000" id="s2wires"></svg>
+        <div id="s2docs"></div>
+        <div id="s2ring" class="ring" style="left:560px;top:500px;width:176px;height:176px"></div>
+        <div class="core" style="left:560px;top:500px;font-size:46px">LLM</div>
+        <div id="chart"></div>
+        <div class="key" style="left:790px;top:700px"><span style="background:#8c9bff"></span>LLM CODES</div>
+        <div class="key" style="left:790px;top:736px"><span style="border:3px solid #f0b24a"></span>HUMAN CODES</div>
+        <div id="s2pk"></div>
+        <div class="cap"><b>03</b> &nbsp;LLM CODING, CHECKED AGAINST PEOPLE</div>
+      </div>
+    </div>
+    <script>
+      let seed = 11;
+      const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+      const T = 12, S = 4;
+      const tl = gsap.timeline({ paused: true });
+      const mk = (wrap) => { const p = document.createElement("div"); p.className = "pk"; wrap.appendChild(p); return p; };
+
+      tl.fromTo("#grid", { x: 0 }, { x: 60, duration: T, ease: "none" }, 0);
+      for (let i = 0; i < 3; i++) {
+        tl.fromTo(`#s${i}`, { opacity: 0 }, { opacity: 1, duration: 0.45 }, i * S + 0.05);
+        tl.to(`#s${i}`, { opacity: 0, duration: 0.4 }, i * S + 3.55);
+      }
+
+      // ---- Scene A
+      const AX = 420, AY = 500;
+      const TOOLS = [["Search", 900, 230], ["CRM", 960, 410], ["Docs", 960, 590], ["Forecast", 900, 770]];
+      let w = `<line x1="90" y1="500" x2="${AX}" y2="${AY}" stroke="rgba(240,178,74,.45)" stroke-width="3"/>`;
+      TOOLS.forEach(([n, x, y]) => { w += `<line x1="${AX}" y1="${AY}" x2="${x}" y2="${y}" stroke="rgba(140,155,255,.35)" stroke-width="3" stroke-dasharray="7 10"/>`; });
+      document.getElementById("s0wires").innerHTML = w;
+      const tw = document.getElementById("s0tools");
+      TOOLS.forEach(([n, x, y], i) => {
+        const d = document.createElement("div");
+        d.className = "tool"; d.id = "tool" + i; d.textContent = n; d.style.left = x + "px"; d.style.top = y + "px";
+        tw.appendChild(d);
+      });
+      const pkw = document.getElementById("s0pk");
+      const q = mk(pkw);
+      tl.set(q, { x: 90, y: 500, opacity: 0 }, 0);
+      tl.to(q, { opacity: 1, duration: 0.1 }, 0.45);
+      tl.to(q, { x: AX, y: AY, duration: 0.5, ease: "power2.in" }, 0.45);
+      tl.to(q, { opacity: 0, duration: 0.1 }, 0.9);
+      tl.fromTo("#s0ring", { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.7, duration: 0.8, ease: "power2.out" }, 0.95);
+      TOOLS.forEach(([n, x, y], i) => {
+        const t0 = 1.05 + i * 0.32;
+        const p = mk(pkw);
+        tl.set(p, { x: AX, y: AY, opacity: 0 }, 0);
+        tl.to(p, { opacity: 1, duration: 0.1 }, t0);
+        tl.to(p, { x, y, duration: 0.55, ease: "power1.inOut" }, t0);
+        tl.to(`#tool${i}`, { borderColor: "#f0b24a", backgroundColor: "#2a2f5c", duration: 0.15 }, t0 + 0.55);
+        tl.to(p, { x: AX, y: AY, duration: 0.55, ease: "power1.inOut" }, t0 + 0.65);
+        tl.to(p, { opacity: 0, duration: 0.1 }, t0 + 1.15);
+      });
+      tl.fromTo("#s0ring", { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.9, duration: 0.9, ease: "power2.out", immediateRender: false }, 2.85);
+
+      // ---- Scene B
+      let w3 = "";
+      const pts = [];
+      for (let i = 0; i < 28; i++) { const a = rnd() * Math.PI * 2, d = 30 + rnd() * 150; pts.push([470 + Math.cos(a) * d * 1.25, 650 + Math.sin(a) * d * 0.8, 0]); }
+      for (let i = 0; i < 28; i++) { const a = rnd() * Math.PI * 2, d = 30 + rnd() * 150; pts.push([770 + Math.cos(a) * d * 1.25, 360 + Math.sin(a) * d * 0.8, 1]); }
+      pts.forEach(([x, y, c]) => {
+        w3 += c === 0
+          ? `<circle class="pt" cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="12" fill="#8c9bff"/>`
+          : `<rect class="pt" x="${(x - 11).toFixed(0)}" y="${(y - 11).toFixed(0)}" width="22" height="22" rx="3" fill="#f0b24a"/>`;
+      });
+      w3 += `<line id="bound" x1="300" y1="170" x2="940" y2="850" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-dasharray="940" stroke-dashoffset="940"/>`;
+      document.getElementById("s1svg").innerHTML = w3;
+      tl.from("#s1svg .pt", { opacity: 0, duration: 0.3, stagger: 0.018 }, S + 0.2);
+      tl.to("#bound", { strokeDashoffset: 0, duration: 1.1, ease: "power2.inOut" }, S + 1.5);
+      tl.set("#bound", { strokeDashoffset: 940 }, S + 3.98);
+
+      // ---- Scene C
+      const docs = document.getElementById("s2docs");
+      const DY = [210, 345, 480, 615, 750];
+      let w4 = "";
+      DY.forEach((y, i) => {
+        const d = document.createElement("div");
+        d.className = "doc"; d.id = "doc" + i; d.style.left = "90px"; d.style.top = (y - 44) + "px";
+        d.innerHTML = `<i style="width:${55 + ((i * 37) % 40)}%"></i><i style="width:${45 + ((i * 53) % 45)}%"></i><i style="width:${40 + ((i * 29) % 45)}%"></i>`;
+        docs.appendChild(d);
+        w4 += `<line x1="290" y1="${y}" x2="560" y2="500" stroke="rgba(140,155,255,.3)" stroke-width="2.5" stroke-dasharray="6 9"/>`;
+      });
+      w4 += `<line x1="560" y1="500" x2="790" y2="500" stroke="rgba(240,178,74,.45)" stroke-width="3"/>`;
+      document.getElementById("s2wires").innerHTML = w4;
+      const chart = document.getElementById("chart");
+      const H = [[0.82, 0.78], [0.55, 0.6], [0.34, 0.3]];
+      H.forEach(([l, h], k) => {
+        const x = 20 + k * 110;
+        chart.insertAdjacentHTML("beforeend",
+          `<div class="bar l" id="bl${k}" style="left:${x}px;height:${l * 360}px"></div><div class="bar h" id="bh${k}" style="left:${x + 50}px;height:${h * 360}px"></div>`);
+      });
+      tl.from("#s2docs .doc", { opacity: 0, x: -30, duration: 0.35, stagger: 0.08 }, 2 * S + 0.2);
+      const pw = document.getElementById("s2pk");
+      DY.forEach((y, i) => {
+        const t0 = 2 * S + 0.7 + i * 0.14;
+        const p = mk(pw);
+        tl.set(p, { x: 290, y, opacity: 0 }, 0);
+        tl.to(p, { opacity: 1, duration: 0.08 }, t0);
+        tl.to(p, { x: 560, y: 500, duration: 0.5, ease: "power2.in" }, t0);
+        tl.to(p, { opacity: 0, duration: 0.08 }, t0 + 0.45);
+      });
+      tl.fromTo("#s2ring", { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.7, duration: 0.8, ease: "power2.out" }, 2 * S + 1.45);
+      tl.from("#chart .bar.l", { scaleY: 0, duration: 0.7, stagger: 0.12, ease: "power2.out" }, 2 * S + 1.6);
+      tl.from("#chart .bar.h", { scaleY: 0, duration: 0.7, stagger: 0.12, ease: "power2.out" }, 2 * S + 2.1);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
