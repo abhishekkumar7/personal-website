@@ -6,10 +6,8 @@ Pages are tabs inside one file: Home, About, Research, AI Programmes, Contact (`
 
 ## Motion graphics
 
-The videos in `media/` are rendered with [HyperFrames](https://hyperframes.heygen.com). Sources are in `hyperframes/`:
+The expertise reel in `media/` is rendered with [HyperFrames](https://hyperframes.heygen.com). Its source is in `hyperframes/reel`.
 
-- `hyperframes/hero` → `media/hero-bg.mp4` (hero background network)
-- `hyperframes/reel` → `media/reel.mp4` (three expertise scenes)
 
 To re-render, from a composition folder run:
 

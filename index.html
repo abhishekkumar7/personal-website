@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Literata:ital,opsz,wght@0,7..72,400;1,7..72,400;1,7..72,500&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a speaker-and-author site. Solid navy bar, full-bleed hero with the portrait dissolving into a
-   HyperFrames network, then alternating white and tinted bands. Titles of works are set in italic serif. */
+/* Layout: a speaker-and-author site. Solid navy bar, full-bleed light hero with the portrait as background,
+   then the HyperFrames expertise reel and alternating white and tinted bands. Titles of works are set in italic serif. */
 :root{
   --paper:#ffffff; --band:#f2f4f9; --sheet:#ffffff; --ink:#151b33; --muted:#59627a; --line:#dfe3ec;
   --navy:#0b1028; --navy-2:#151c44; --on-navy:#eef1fb; --on-navy-muted:#b4bce0;
@@ -63,24 +63,26 @@ section.band.tint{background:var(--band)}
 @media (max-width:640px){.brand{display:none}.bar .wrap{justify-content:center}}
 
 /* Hero */
-.hero{position:relative;background:var(--navy);color:var(--on-navy);overflow:hidden}
-.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,16,40,.92) 0%,rgba(11,16,40,.7) 40%,rgba(11,16,40,0) 70%)}
-.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);align-items:end;gap:24px;min-height:clamp(340px,44vw,500px)}
-.hero-text{align-self:center;padding-block:48px}
-.hero h1{font-size:clamp(2.3rem,5.2vw,3.7rem);font-weight:800;color:#fff}
-.hero p{font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--on-navy-muted);margin-top:16px;max-width:46ch;line-height:1.55}
-.hero .roles{font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#f0b24a;margin-top:0;margin-bottom:14px}
-.hero-photo{align-self:stretch;display:flex;align-items:flex-end;justify-content:flex-end}
-.hero-photo img{display:block;width:100%;max-width:440px;aspect-ratio:1;object-fit:cover;
-  -webkit-mask-image:radial-gradient(ellipse 62% 70% at 55% 55%,#000 52%,transparent 78%);
-  mask-image:radial-gradient(ellipse 62% 70% at 55% 55%,#000 52%,transparent 78%)}
-.hero .vbtn{position:absolute;right:14px;bottom:12px;font-family:var(--mono);font-size:.72rem;background:rgba(11,16,40,.55);color:var(--on-navy);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:4px 12px;cursor:pointer;z-index:2}
+/* Hero: always light. The portrait fills the right side and fades into a soft morning gradient. */
+.hero{position:relative;overflow:hidden;color:#151b33;
+  background:linear-gradient(115deg,#ffffff 0%,#eef2ff 45%,#fff3df 100%)}
+.hero-bg{position:absolute;right:0;top:0;height:100%;width:min(62%,760px);object-fit:cover;object-position:50% 30%;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 38%);mask-image:linear-gradient(90deg,transparent 0%,#000 38%)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr);align-items:center;min-height:clamp(360px,42vw,520px)}
+.hero-text{padding-block:56px;max-width:560px}
+.hero h1{font-size:clamp(2.3rem,5.2vw,3.7rem);font-weight:800;color:#151b33}
+.hero p{font-size:clamp(1.05rem,1.6vw,1.25rem);color:#3d4663;margin-top:16px;max-width:40ch;line-height:1.55}
+.hero .roles{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8a5306;
+  background:#ffe8bf;padding:5px 12px;border-radius:999px;margin:0 0 16px}
+.hero .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.hero .btn{color:#151b33}
+.hero .btn.fill{background:#3446d8;border-color:#3446d8;color:#fff}
 @media (max-width:760px){
-  .hero .wrap{grid-template-columns:1fr}
-  .hero .shade{background:linear-gradient(180deg,rgba(11,16,40,.9) 0%,rgba(11,16,40,.55) 100%)}
-  .hero-text{padding-block:40px 0}
-  .hero-photo{justify-content:center}.hero-photo img{max-width:260px}
+  .hero-bg{position:relative;display:block;width:100%;height:auto;aspect-ratio:1;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 25%);mask-image:linear-gradient(180deg,transparent 0%,#000 25%)}
+  .hero{display:flex;flex-direction:column-reverse}
+  .hero .wrap{min-height:0}
+  .hero-text{padding-block:36px 8px}
 }
 
 /* Intro + expertise reel */
@@ -241,17 +243,15 @@ footer a{color:var(--on-navy)}
 <!-- ================= HOME ================= -->
 <div class="view" id="v-home">
   <section class="hero" aria-labelledby="h-name">
-    <video id="herobg" src="media/hero-bg.mp4" poster="media/hero-bg-poster.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
-    <div class="shade"></div>
+    <img class="hero-bg" src="media/portrait.webp" alt="Abhishek Kumar Jha in front of a whiteboard that reads Better Decisions with AI" width="900" height="900">
     <div class="wrap">
       <div class="hero-text">
         <p class="roles">Assistant Professor · SPJIMR, Mumbai</p>
         <h1 id="h-name">Abhishek Kumar Jha</h1>
         <p>Research, programmes and ideas on how managers and researchers can make better decisions with AI.</p>
+        <div class="ctas"><a class="btn fill" href="#programmes">AI programmes</a><a class="btn" href="#research">Research</a></div>
       </div>
-      <div class="hero-photo"><img src="media/portrait.webp" alt="Portrait of Abhishek Kumar Jha" width="900" height="900"></div>
     </div>
-    <button class="vbtn" type="button" data-vid="herobg">Pause</button>
   </section>
 
   <section class="band" aria-labelledby="h-intro">
@@ -495,9 +495,8 @@ footer a{color:var(--on-navy)}
 (function(){
   var VIEWS = ['home','about','research','programmes','contact'];
   var reel = document.getElementById('reel');
-  var herobg = document.getElementById('herobg');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var paused = { reel: reduce, herobg: reduce };
+  var paused = { reel: reduce };
 
   function play(v){ var p = v.play(); if (p && p.catch) p.catch(function(){}); }
   function show(){
@@ -507,12 +506,12 @@ footer a{color:var(--on-navy)}
     document.querySelectorAll('.nav a').forEach(function(a){
       if (a.getAttribute('data-v') === v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
     });
-    [reel, herobg].forEach(function(vid){ if (v === 'home' && !paused[vid.id]) play(vid); else vid.pause(); });
+    [reel].forEach(function(vid){ if (v === 'home' && !paused[vid.id]) play(vid); else vid.pause(); });
     window.scrollTo(0, 0);
   }
   window.addEventListener('hashchange', show);
 
-  if (reduce){ [reel, herobg].forEach(function(vid){ vid.removeAttribute('autoplay'); vid.pause(); }); }
+  if (reduce){ [reel].forEach(function(vid){ vid.removeAttribute('autoplay'); vid.pause(); }); }
   document.querySelectorAll('.vbtn').forEach(function(btn){
     var vid = document.getElementById(btn.getAttribute('data-vid'));
     if (reduce) btn.textContent = 'Play';
