@@ -1,16 +1,9 @@
-# Abhishek Kumar Jha — personal website
+# Abhishek Kumar Jha — Portfolio 3
 
-Static site: `index.html` plus `media/`. Open `index.html` in a browser or serve the folder with any static host (GitHub Pages works).
+The personal website with a walking illustrated Abhishek on top. His dialogue appears as text in speech bubbles; there is no sound.
 
-Pages are tabs inside one file: Home, About, Research, AI Programmes, Contact (`#about`, `#research`, `#programmes`, `#contact`).
+- `index.html` – the site (Home, About, Research, AI Programmes, Contact as `#` tabs).
+- `walker.js` / `walker.css` – the character: walks into the orange office on Home and shows a short intro in speech bubbles, then walks along the bottom of every page. Outfit changes with the page: lab coat on Research, teacher's blazer on AI Programmes, email board on Contact. Click him and he laughs and runs off; hover him in teacher or board outfit for the email board.
+- `hyperframes/reel` – source of the expertise reel video.
 
-## Motion graphics
-
-The expertise reel in `media/` is rendered with [HyperFrames](https://hyperframes.heygen.com). Its source is in `hyperframes/reel`.
-
-
-To re-render, from a composition folder run:
-
-```bash
-npx hyperframes@0.8.134 render -o renders/out.mp4
-```
+Serve the folder with any static server, e.g. `python -m http.server`.

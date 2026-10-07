@@ -1,0 +1,103 @@
+/* Walking Abhishek: an illustrated character that lives in the hero office and walks along the
+   bottom of every page, changing outfit with the page or section in view. */
+.av{position:absolute;bottom:0;left:0;height:var(--h);width:calc(var(--h) * .5556);
+  --skin:#c98b60;--skin-d:#a96e47;--sleeve:#1d1f26;--step:.62s;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.av:focus-visible{outline:3px solid #1d1530;outline-offset:4px;border-radius:12px}
+.av-flip{position:absolute;inset:0;transition:transform .18s}
+.av-svg{display:block;width:100%;height:100%;overflow:visible}
+.av .sleeve{stroke:var(--sleeve)}
+.av .skin{fill:var(--skin)}
+.av .skin-d{fill:var(--skin-d)}
+.av .leg,.av .arm,.av .bob,.av .head,.av .eyes,.av .av-flip{transform-box:view-box}
+.av .leg-l{transform-origin:85px 248px}.av .leg-r{transform-origin:115px 248px}
+.av .arm-l{transform-origin:62px 166px}.av .arm-r{transform-origin:138px 166px}
+.av .head{transform-origin:100px 140px}
+.av .eyes{transform-origin:100px 96px;animation:avBlink 4.2s infinite}
+.av .bob{transform-origin:100px 350px}
+
+/* Costume layers */
+.av .c-coat,.av .c-blazer,.av .c-goggles,.av .c-glasses,.av .c-flask,.av .c-pointer,.av .c-book{display:none}
+.av[data-costume="scientist"]{--sleeve:#f4f6f8}
+.av[data-costume="scientist"] .c-coat,.av[data-costume="scientist"] .c-goggles,.av[data-costume="scientist"] .c-flask{display:inline}
+.av[data-costume="teacher"]{--sleeve:#7a5536}
+.av[data-costume="teacher"] .c-blazer,.av[data-costume="teacher"] .c-glasses,.av[data-costume="teacher"] .c-pointer,.av[data-costume="teacher"] .c-book{display:inline}
+
+/* Face states */
+.av .m-open,.av .m-laugh,.av .eyes-laugh{opacity:0}
+.av.talking .m-smile{opacity:0}
+.av.talking .m-open{animation:avTalk .32s steps(2,end) infinite}
+.av.laughing .m-smile,.av.laughing .m-open,.av.laughing .eyes{opacity:0}
+.av.laughing .m-laugh,.av.laughing .eyes-laugh{opacity:1}
+.av.laughing .bob{animation:avShake .14s linear infinite}
+.av.laughing .head{transform:rotate(-6deg)}
+
+/* Walking: legs step, arms swing, body bobs */
+.av.walking .leg-l{animation:avStepA var(--step) ease-in-out infinite}
+.av.walking .leg-r{animation:avStepB var(--step) ease-in-out infinite}
+.av.walking .arm-l{animation:avSwingA var(--step) ease-in-out infinite}
+.av.walking .arm-r{animation:avSwingB var(--step) ease-in-out infinite}
+.av.walking .bob{animation:avBob calc(var(--step) / 2) ease-in-out infinite}
+.av.running{--step:.3s}
+.av.waving .arm-r{animation:avWave .5s ease-in-out 3}
+
+@keyframes avStepA{0%,100%{transform:translateY(0) rotate(4deg)}50%{transform:translateY(-12px) rotate(-6deg)}}
+@keyframes avStepB{0%,100%{transform:translateY(-12px) rotate(6deg)}50%{transform:translateY(0) rotate(-4deg)}}
+@keyframes avSwingA{0%,100%{transform:rotate(12deg)}50%{transform:rotate(-14deg)}}
+@keyframes avSwingB{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(14deg)}}
+@keyframes avBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes avShake{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+@keyframes avTalk{0%{opacity:1}100%{opacity:0}}
+@keyframes avBlink{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+@keyframes avWave{0%,100%{transform:rotate(-150deg)}50%{transform:rotate(-120deg)}}
+
+/* Outfit change puff */
+.av-poof{position:absolute;left:50%;top:45%;width:120%;aspect-ratio:1;border-radius:50%;pointer-events:none;
+  transform:translate(-50%,-50%) scale(.2);opacity:0;
+  background:radial-gradient(circle,rgba(255,255,255,.95) 0 30%,rgba(255,255,255,.6) 31% 50%,transparent 51%)}
+.av.poof .av-poof{animation:avPoof .5s ease-out}
+.av.poof .av-flip{animation:avSpin .5s ease-in-out}
+@keyframes avPoof{0%{opacity:.95;transform:translate(-50%,-50%) scale(.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.3)}}
+@keyframes avSpin{0%{scale:1}40%{scale:.82 1.08}100%{scale:1}}
+
+/* Speech bubble */
+.av-bubble{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(calc(-50% + var(--bx,0px)));
+  width:max-content;max-width:240px;background:#ffffff;color:#1d1530;border:2.5px solid #1d1530;border-radius:16px;
+  padding:9px 13px;font:600 .9rem/1.35 "Plus Jakarta Sans",system-ui,sans-serif;box-shadow:0 4px 0 rgba(29,21,48,.2);
+  pointer-events:none;animation:avPop .22s ease-out}
+.av-bubble::after{content:"";position:absolute;top:100%;left:calc(50% - var(--bx,0px));width:14px;height:14px;background:#fff;
+  border-right:2.5px solid #1d1530;border-bottom:2.5px solid #1d1530;transform:translate(-50%,-7px) rotate(45deg)}
+.av.side .av-bubble{bottom:auto;top:2%;left:auto;right:calc(100% - 12px);transform:none;max-width:260px}
+.av.side .av-bubble::after{top:22px;left:100%;transform:translate(-7px,0) rotate(-45deg)}
+@keyframes avPop{0%{opacity:0;scale:.85}100%{opacity:1;scale:1}}
+
+/* Hanging email board */
+.av-board{position:absolute;top:46%;left:50%;width:230px;transform:translateX(-50%);z-index:2;cursor:copy;
+  background:#fff8ec;color:#1d1530;border:3px solid #6b3d1f;border-radius:10px;padding:10px 12px 9px;text-align:center;
+  box-shadow:0 6px 0 rgba(107,61,31,.25);font-family:"Plus Jakarta Sans",system-ui,sans-serif;animation:avDrop .35s cubic-bezier(.3,1.5,.6,1)}
+.av-board i{position:absolute;bottom:100%;width:2.5px;height:34px;background:#6b3d1f}
+.av-board i:first-child{left:32%;transform:rotate(14deg);transform-origin:bottom}
+.av-board i:nth-child(2){right:32%;transform:rotate(-14deg);transform-origin:bottom}
+.av-board b{display:block;font-size:.95rem;font-weight:800}
+.av-board .e{display:block;font-family:"JetBrains Mono",monospace;font-size:.78rem;margin-top:2px;word-break:break-all}
+.av-board small{display:block;font-size:.7rem;color:#8a5306;margin-top:3px;font-weight:600}
+@keyframes avDrop{0%{opacity:0;transform:translate(-50%,-26px) rotate(-4deg)}100%{opacity:1;transform:translate(-50%,0)}}
+
+/* Dock: the character that walks along the bottom of the viewport */
+.av-dock{position:fixed;left:0;right:0;bottom:env(safe-area-inset-bottom,0px);height:0;z-index:40;pointer-events:none}
+.av-dock .av{pointer-events:auto;bottom:6px;--h:168px;transition:opacity .35s,translate .35s}
+.av-dock.away .av{opacity:0;translate:0 40px;pointer-events:none}
+.av-dock.off .av{display:none}
+.av-ctrl{position:fixed;right:12px;top:calc(62px + 10px + env(safe-area-inset-top,0px));z-index:41;display:flex;gap:6px}
+.av-ctrl button{font:700 .74rem/1 "Plus Jakarta Sans",system-ui,sans-serif;background:#1d1530;color:#fff;border:0;border-radius:999px;padding:8px 12px;cursor:pointer;opacity:.85}
+.av-ctrl button:hover{opacity:1}
+@media (max-width:640px){.av-dock .av{--h:128px}.av-board{width:200px}.av-bubble{max-width:200px;font-size:.82rem}}
+
+/* Hero actor */
+.stage .av{--h:clamp(250px,26vw,330px);bottom:calc(var(--floor) * .42)}
+@media (max-width:820px){.stage .av{--h:280px}}
+
+@media (prefers-reduced-motion: reduce){
+  .av *{animation:none!important}
+  .av.poof .av-flip,.av-bubble,.av-board{animation:none}
+}
