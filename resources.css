@@ -212,3 +212,31 @@
 /* long links (such as the API key address) must wrap on phones */
 .kit-step,.kit-step .body{overflow-wrap:anywhere}
 .kit a.ext{overflow-wrap:anywhere}
+
+/* AI case studies resource */
+.cs-filters{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px}
+.cs-filter{background:var(--sheet);border:1.5px solid var(--line);border-radius:999px;padding:6px 14px;font:inherit;font-size:.86rem;font-weight:700;color:var(--ink);cursor:pointer}
+.cs-filter:hover{border-color:var(--res)}
+.cs-filter[aria-pressed="true"]{background:var(--res);border-color:var(--res);color:#fff}
+.cs-card{margin-top:16px;padding:18px 20px;background:var(--sheet);border:1px solid var(--line);border-left:5px solid var(--res);border-radius:var(--r);display:grid;gap:10px;scroll-margin-top:calc(var(--bar) + 16px)}
+.cs-card[hidden]{display:none}
+.cs-card h4{font-size:1.2rem;font-weight:800;line-height:1.3}
+.cs-card p{margin:0}
+.cs-card .case-meta span:nth-child(2){background:var(--res-soft);color:var(--res)}
+.cs-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.cs-line b{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.cs-line span{font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--band);border:1px solid var(--line)}
+.cs-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:4px;padding-top:12px;border-top:1px solid var(--line)}
+.cs-pick{display:inline-flex;gap:8px;align-items:center;font-weight:700;font-size:.9rem;cursor:pointer}
+.cs-pick input{width:18px;height:18px;accent-color:var(--res)}
+.cs-actions .kit-btn{font-size:.88rem;padding:9px 16px}
+.cs-card.picked{background:var(--res-soft);border-color:var(--res)}
+.cs-none{margin-top:16px;color:var(--muted)}
+.cs-bar{position:sticky;bottom:14px;z-index:30;margin-top:18px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:12px;box-shadow:0 10px 30px rgba(11,16,40,.35);font-weight:700}
+.cs-bar[hidden]{display:none}
+.cs-bar-actions{display:inline-flex;gap:10px;align-items:center}
+.cs-bar .kit-btn{background:var(--res);border-color:var(--res);color:#fff;font-size:.88rem;padding:8px 16px}
+.ghost-light{background:none;border:0;color:inherit;font:inherit;font-weight:600;text-decoration:underline;cursor:pointer;opacity:.85}
+
+.kit h3.ph{flex-wrap:wrap}
+.kit h3.ph .tag{white-space:nowrap}

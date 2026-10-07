@@ -11,7 +11,7 @@
   function set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } }
 
   /* ---------- which tool is open: #resources/<tool> ---------- */
-  var TOOLS = ['app-dev', 'multi-agent'];
+  var TOOLS = ['app-dev', 'multi-agent', 'cases'];
   var tabs = root.querySelectorAll('.tr-tool');
   var panels = root.querySelectorAll('[data-tool-panel]');
   var asides = root.querySelectorAll('[data-tool-aside]');
@@ -164,4 +164,40 @@
   [elType, elWhat, elKeep, elTest].forEach(function (el) { el.addEventListener('input', build); el.addEventListener('change', build); });
   document.getElementById('pb-example').addEventListener('click', function () { elWhat.value = TYPES[elType.value].ex; build(); });
   build();
+
+  /* ---------- AI case studies: theme filter and a combined request ---------- */
+  var csCards = Array.prototype.slice.call(root.querySelectorAll('.cs-card'));
+  if (csCards.length) {
+    var filters = root.querySelectorAll('.cs-filter');
+    var none = document.getElementById('cs-none');
+    filters.forEach(function (f) {
+      f.addEventListener('click', function () {
+        var t = f.getAttribute('data-theme'), shown = 0;
+        filters.forEach(function (x) { x.setAttribute('aria-pressed', String(x === f)); });
+        csCards.forEach(function (c) {
+          var ok = t === 'all' || (' ' + c.getAttribute('data-themes') + ' ').indexOf(' ' + t + ' ') >= 0;
+          c.hidden = !ok;
+          if (ok) shown++;
+        });
+        none.hidden = shown > 0;
+      });
+    });
+    var bar = document.getElementById('cs-bar'), count = document.getElementById('cs-count'), send = document.getElementById('cs-send');
+    var boxes = csCards.map(function (c) { return c.querySelector('.cs-pick input'); });
+    function paintRequest() {
+      var p = boxes.filter(function (i) { return i.checked; });
+      csCards.forEach(function (c) { c.classList.toggle('picked', c.querySelector('.cs-pick input').checked); });
+      bar.hidden = p.length === 0;
+      count.textContent = p.length + (p.length === 1 ? ' case selected' : ' cases selected');
+      var list = p.map(function (i) { return '- ' + i.getAttribute('data-case'); }).join('\n');
+      var body = 'Hello Abhishek,\n\nI would like to request the following case(s) and teaching note(s):\n' + list + '\n\nCourse and audience:\nTerm and dates:\nInstitution:\n';
+      send.href = 'mailto:abhishek.jha@spjimr.org?subject=' + encodeURIComponent('Case request: ' + p.length + (p.length === 1 ? ' case' : ' cases')) + '&body=' + encodeURIComponent(body);
+    }
+    boxes.forEach(function (b) { b.addEventListener('change', paintRequest); });
+    document.getElementById('cs-clear').addEventListener('click', function () {
+      boxes.forEach(function (b) { b.checked = false; });
+      paintRequest();
+    });
+    paintRequest();
+  }
 })();
