@@ -554,8 +554,19 @@ footer .wrap{width:100%}
       <aside class="tr-side" aria-label="Teaching tools">
         <div>
           <p class="tr-label">Tools</p>
-          <nav class="tr-tools"><button type="button" class="tr-tool" data-tool="app-dev" aria-current="true"><span class="n">01</span>AI app development</button><button type="button" class="tr-tool" data-tool="multi-agent" aria-current="false"><span class="n">02</span>Multi-agent simulation</button></nav>
-          <p class="tr-more">More tools will be added here.</p>
+          <nav class="tr-tools" aria-label="Choose a tool">
+            <button type="button" class="tr-tool" data-tool="app-dev" aria-current="true" style="--c:var(--accent);--cs:var(--accent-soft)">
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12"/></svg></span>
+              <span class="tx"><b>AI app development</b><small>Build a working app with an AI assistant</small></span>
+              <span class="n">01</span>
+            </button>
+            <button type="button" class="tr-tool" data-tool="multi-agent" aria-current="false" style="--c:var(--warm);--cs:var(--warm-soft)">
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="2.6"/><circle cx="6" cy="17.5" r="2.6"/><circle cx="18" cy="17.5" r="2.6"/><path d="M10.7 8.3L7.3 15.2M13.3 8.3l3.4 6.9M8.6 17.5h6.8"/></svg></span>
+              <span class="tx"><b>Multi-agent simulation</b><small>Lead a team of AI agents on a business decision</small></span>
+              <span class="n">02</span>
+            </button>
+            <div class="tr-soon" aria-hidden="true"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><span class="tx"><b>More tools coming</b><small>New classroom tools will appear here</small></span></div>
+          </nav>
         </div>
         <div data-tool-aside="app-dev">
           <p class="tr-label">This kit</p>
