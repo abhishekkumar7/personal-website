@@ -11,7 +11,7 @@
   function set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } }
 
   /* ---------- which tool is open: #resources/<tool> ---------- */
-  var TOOLS = ['app-dev'];
+  var TOOLS = ['app-dev', 'multi-agent'];
   var tabs = root.querySelectorAll('.tr-tool');
   var panels = root.querySelectorAll('[data-tool-panel]');
   var asides = root.querySelectorAll('[data-tool-aside]');
@@ -115,15 +115,30 @@
     });
   });
   if ('IntersectionObserver' in window) {
-    var links = root.querySelectorAll('.kit-jump a');
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
-        links.forEach(function (l) { l.classList.toggle('on', l.getAttribute('data-jump') === en.target.id); });
+        var a = root.querySelector('.kit-jump a[data-jump="' + en.target.id + '"]');
+        if (!a) return;
+        a.parentNode.querySelectorAll('a').forEach(function (l) { l.classList.toggle('on', l === a); });
       });
     }, { rootMargin: '-20% 0px -70% 0px' });
-    kit.querySelectorAll('h3.ph[id^="kit-p"]').forEach(function (h) { io.observe(h); });
+    root.querySelectorAll('h3.ph[id]').forEach(function (h) { if (root.querySelector('.kit-jump a[data-jump="' + h.id + '"]')) io.observe(h); });
   }
+
+  /* ---------- click-to-play intro videos (YouTube loads only when asked) ---------- */
+  root.addEventListener('click', function (e) {
+    var btn = e.target.closest('.yt .play');
+    if (!btn) return;
+    var box = btn.parentNode, id = box.getAttribute('data-yt');
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+    f.title = (box.getAttribute('data-title') || 'Simulation') + ' introduction video';
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    f.allowFullscreen = true;
+    box.textContent = '';
+    box.appendChild(f);
+  });
 
   /* ---------- request builder (Phase 3) ---------- */
   var TYPES = {

@@ -22,7 +22,7 @@
     about: { costume: 'casual', line: ['about', 'A little about me. AI, teaching and research.'], wave: true },
     research: { costume: 'scientist', line: ['research', 'Lab coat on! Click any paper title to read it.'] },
     programmes: { costume: 'teacher', line: ['programmes', 'Class is in session. Pick a programme, and hover over me for my email.'] },
-    resources: { costume: 'teacher', line: ['resources', 'Tools for your own classroom. Start with the AI app kit.'] },
+    resources: { costume: 'teacher', line: ['resources', 'Tools for your own classroom. Pick one on the left.'] },
     contact: { costume: 'board', line: ['contact', "Here's my board. Copy my email, and let's talk."] }
   };
   var SECTION = {

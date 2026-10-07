@@ -554,7 +554,7 @@ footer .wrap{width:100%}
       <aside class="tr-side" aria-label="Teaching tools">
         <div>
           <p class="tr-label">Tools</p>
-          <nav class="tr-tools"><button type="button" class="tr-tool" data-tool="app-dev" aria-current="true"><span class="n">01</span>AI app development</button></nav>
+          <nav class="tr-tools"><button type="button" class="tr-tool" data-tool="app-dev" aria-current="true"><span class="n">01</span>AI app development</button><button type="button" class="tr-tool" data-tool="multi-agent" aria-current="false"><span class="n">02</span>Multi-agent simulation</button></nav>
           <p class="tr-more">More tools will be added here.</p>
         </div>
         <div data-tool-aside="app-dev">
@@ -569,6 +569,14 @@ footer .wrap{width:100%}
             <div class="bar2"><i id="kit-bar"></i></div>
             <button type="button" id="kit-reset">Clear ticks</button>
           </div>
+        </div>
+        <div data-tool-aside="multi-agent" hidden>
+          <p class="tr-label">This resource</p>
+          <nav class="kit-jump" aria-label="Sections of this resource">
+            <a href="#resources/multi-agent" data-jump="sim-how"><b>1</b>How it works</a>
+            <a href="#resources/multi-agent" data-jump="sim-cases"><b>2</b>Sample simulations</a>
+            <a href="#resources/multi-agent" data-jump="sim-run"><b>3</b>Run one with me</a>
+          </nav>
         </div>
       </aside>
 
@@ -587,7 +595,6 @@ footer .wrap{width:100%}
             <a class="kit-btn" href="resources/ai-app-kit/AI_App_Development_Kit.zip" download>Download the starter kit (zip)</a>
             <a class="kit-btn ghost" href="#resources/app-dev" data-jump="kit-p1">Start at step 1</a>
           </div>
-          <p class="kit-credit">Adapted from the Product Sprint App Development Kit in UCLA Anderson's course <i>The Science and Strategy of AI</i> (<a class="ext" href="https://ucla-anderson-ssai.github.io/SSAI/Product%20Sprint/App_Development_Kit.html" target="_blank" rel="noopener">original kit ↗</a>). This version is written for a different course, stops at your own computer and adds an iteration phase.</p>
         </header>
 
         <h3 class="ph" id="kit-intro" style="border-top:0;padding-top:0;margin-top:34px">What this kit is for</h3>
@@ -845,6 +852,105 @@ git commit -m "v1 works"</pre><button type="button" class="copy-btn">Copy</butto
           <p>Do not guess. Copy the exact error message, tell your assistant which command you ran, and ask it to explain the likely cause before it edits anything. Using this kit in your own class? I would like to hear how it went: <a href="#contact">get in touch</a>.</p>
         </div>
       </article>
+
+      <article class="kit sim" id="tool-multi-agent" data-tool-panel="multi-agent" hidden>
+        <header class="kit-head">
+          <p class="eyebrow">Teaching resource 02</p>
+          <h2>Multi-agent simulation: lead a team of AI agents</h2>
+          <p class="lede">Business simulations in which participants run a committee of AI agents on a realistic decision. The agents advise, a person sets the limits and makes the final call, and a sealed set of outcomes shows what really happened.</p>
+          <ul class="kit-chips">
+            <li>MBA, executive and corporate teams</li>
+            <li>From one session to a multi-round course</li>
+            <li>No coding required</li>
+            <li>Fictional companies and data</li>
+          </ul>
+          <p class="kit-credit">Part of the AI Decision Desk, created with Prof. Ashish Desai.</p>
+        </header>
+
+        <h3 class="ph" id="sim-how" style="border-top:0;padding-top:0;margin-top:34px">How a simulation works</h3>
+        <p style="margin-top:10px">Each simulation drops participants into a fictional company that has to make one decision, and gives them a realistic file of records to make it with. Participants design the AI agents: what each agent is responsible for, what it looks at, what it must produce and what it must never do. They then run the committee, review its recommendation and decide.</p>
+        <p style="margin-top:10px">The point is not to get the agents to sound clever. It is to practise supervising AI: writing precise instructions, keeping spending and risk inside limits that no agent can move, and checking the plan against reality.</p>
+
+        <figure class="dg" aria-label="Diagram: the four moves of a simulation">
+          <p class="ttl">Four moves</p>
+          <div class="chain">
+            <div class="nd"><b>1</b>A business problem<small>a company, a decision and a file of records</small></div>
+            <div class="nd hl"><b>2</b>A committee of AI agents<small>you design each agent's role and rules</small></div>
+            <div class="nd wm"><b>3</b>Limits a person owns<small>budgets and policy no agent can change</small></div>
+            <div class="nd ok"><b>4</b>A reality check<small>sealed outcomes show what actually happened</small></div>
+          </div>
+          <figcaption>A person owns the limits and the final decision at every step. The agents advise.</figcaption>
+        </figure>
+
+        <h3 class="ph p2" id="sim-science"><span class="tag">Design</span>What makes it more than a prompt exercise</h3>
+        <p class="ph-sub">Each simulation is built around a real way AI systems go wrong, so blind trust gets caught.</p>
+        <div class="sim-grid">
+          <div class="sim-card"><b>Sealed outcomes</b><p>What actually happened stays locked until participants commit to a decision. There is no hindsight and no gaming.</p></div>
+          <div class="sim-card"><b>Blind rounds</b><p>What the team learns is tested on a set of records the agents have never seen, so over-fitting shows up.</p></div>
+          <div class="sim-card"><b>Hard limits</b><p>Budgets, caps and policy sit outside the agents. No instruction and no learning can move them.</p></div>
+          <div class="sim-card"><b>Planted failure modes</b><p>Models that are wrong for one group, data that drifts, and messy records wait to be found by a careful team.</p></div>
+        </div>
+
+        <h3 class="ph p3" id="sim-cases"><span class="tag">Samples</span>Three sample simulations</h3>
+        <p class="ph-sub">The full library has eight simulations across marketing, operations, strategy, sales, HR, content and trust and safety. These three show the range. Each one has a short introduction video.</p>
+
+        <section class="case" id="sim-case-1" aria-labelledby="c1-t">
+          <div class="yt" data-yt="lNFO4unwlu4" data-title="The Festive Win-Back Desk"><img src="media/sim/desk-1.jpg" alt="" loading="lazy" width="960" height="540"><button type="button" class="play" aria-label="Play the introduction video for The Festive Win-Back Desk"><span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></span><small>Introduction video · plays from YouTube</small></button></div>
+          <div class="case-body">
+            <p class="case-meta"><span>Marketing · Retention</span><span>Beginner</span><span>3–4 hours</span></p>
+            <h4 id="c1-t">The Festive Win-Back Desk</h4>
+            <p><b>The situation.</b> An online grocer wants to win back customers before a big festival. Its offer budget is fixed, and too many offers teach customers to wait for discounts. A model has already scored each customer's chance of leaving.</p>
+            <p><b>The decision.</b> Who should receive an offer, and how generous should it be, when the budget cannot grow?</p>
+            <p><b>What participants practise.</b> Writing precise instructions for each agent, keeping spending inside limits no agent can change, and comparing what was predicted with what actually happened.</p>
+            <a class="kit-btn ghost" href="mailto:abhishek.jha@spjimr.org?subject=Multi-agent%20simulation%3A%20The%20Festive%20Win-Back%20Desk&amp;body=Hello%20Abhishek%2C%0A%0AI%27d%20like%20to%20talk%20about%20running%20%22The%20Festive%20Win-Back%20Desk%22.%0A%0AAudience%3A%0ATiming%3A%0AFormat%20(course%2C%20cohort%20or%20company%20workshop)%3A%0A">Ask about this simulation</a>
+          </div>
+        </section>
+
+        <section class="case" id="sim-case-2" aria-labelledby="c2-t">
+          <div class="yt" data-yt="uqWQI5ZGOJM" data-title="The Dispatch Desk"><img src="media/sim/desk-4.jpg" alt="" loading="lazy" width="960" height="540"><button type="button" class="play" aria-label="Play the introduction video for The Dispatch Desk"><span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></span><small>Introduction video · plays from YouTube</small></button></div>
+          <div class="case-body">
+            <p class="case-meta"><span>Operations · Logistics</span><span>Beginner</span><span>3–5 hours</span></p>
+            <h4 id="c2-t">The Dispatch Desk</h4>
+            <p><b>The situation.</b> A same-day delivery start-up has to assign a fresh batch of parcels to riders every morning. AI agents do most of the work.</p>
+            <p><b>The decision.</b> Which parcels can the agents handle from start to finish, and which need a person to check them first?</p>
+            <p><b>What participants practise.</b> Deciding the split between people and AI in a live process, describing each agent precisely, and weighing speed against the cost of a mistake.</p>
+            <a class="kit-btn ghost" href="mailto:abhishek.jha@spjimr.org?subject=Multi-agent%20simulation%3A%20The%20Dispatch%20Desk&amp;body=Hello%20Abhishek%2C%0A%0AI%27d%20like%20to%20talk%20about%20running%20%22The%20Dispatch%20Desk%22.%0A%0AAudience%3A%0ATiming%3A%0AFormat%20(course%2C%20cohort%20or%20company%20workshop)%3A%0A">Ask about this simulation</a>
+          </div>
+        </section>
+
+        <section class="case" id="sim-case-3" aria-labelledby="c3-t">
+          <div class="yt" data-yt="Kk65DkkPVg4" data-title="The Hiring Panel"><img src="media/sim/desk-6.jpg" alt="" loading="lazy" width="960" height="540"><button type="button" class="play" aria-label="Play the introduction video for The Hiring Panel"><span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></span><small>Introduction video · plays from YouTube</small></button></div>
+          <div class="case-body">
+            <p class="case-meta"><span>HR · Hiring</span><span>Intermediate</span><span>Single session</span></p>
+            <h4 id="c3-t">The Hiring Panel</h4>
+            <p><b>The situation.</b> A retailer is hiring at scale for the festive season. AI agents score every candidate, and a human panel is accountable for the final shortlist.</p>
+            <p><b>The decision.</b> Who makes the shortlist, and where should the panel step in and override the agents?</p>
+            <p><b>What participants practise.</b> Finding where an agent is systematically wrong, checking fairness across groups, and overriding a score with a clear audit trail.</p>
+            <a class="kit-btn ghost" href="mailto:abhishek.jha@spjimr.org?subject=Multi-agent%20simulation%3A%20The%20Hiring%20Panel&amp;body=Hello%20Abhishek%2C%0A%0AI%27d%20like%20to%20talk%20about%20running%20%22The%20Hiring%20Panel%22.%0A%0AAudience%3A%0ATiming%3A%0AFormat%20(course%2C%20cohort%20or%20company%20workshop)%3A%0A">Ask about this simulation</a>
+          </div>
+        </section>
+
+        <h3 class="ph" id="sim-run"><span class="tag">Run it</span>How to run one with your group</h3>
+        <p class="ph-sub">The student briefs, data files, sealed outcomes and instructor keys are not published online. I share them, and can run the session with you, when we set one up together.</p>
+        <div class="sim-grid three">
+          <div class="sim-card"><b>For a course</b><p>Business schools and universities. Choose the simulations that fit your term.</p></div>
+          <div class="sim-card"><b>For a cohort</b><p>Executive programmes. A sequence from beginner to advanced for one group.</p></div>
+          <div class="sim-card"><b>For a company</b><p>A half-day or multi-day workshop for teams adopting AI agents, with a debrief on limits, approvals and audit trails.</p></div>
+        </div>
+        <div class="kit-actions">
+          <a class="kit-btn" href="mailto:abhishek.jha@spjimr.org?subject=Multi-agent%20simulation%3A%20run%20a%20session&amp;body=Hello%20Abhishek%2C%0A%0AI%27d%20like%20to%20run%20a%20multi-agent%20simulation.%0A%0AInstitution%20or%20company%3A%0AAudience%20and%20size%3A%0AWhich%20simulations%20interest%20me%3A%0ATiming%3A%0A">Write to me to run a simulation</a>
+          <a class="kit-btn ghost" href="#contact">Other ways to reach me</a>
+        </div>
+
+        <h3 class="ph" id="sim-faq">Common questions</h3>
+        <div class="faq">
+          <details><summary>Do participants need to code?</summary><p>No. Participants write agent instructions in plain language and reason about limits and outcomes. Teams that want to build the agents in code can do so.</p></details>
+          <details><summary>Which AI tools do the simulations work with?</summary><p>They are tool-agnostic. Participants can run their committee in any capable AI assistant or agent framework. The learning is in the design, the limits and the checking, not in a particular product.</p></details>
+          <details><summary>How long does a simulation take?</summary><p>Beginner simulations run in a single session of a few hours. The advanced ones run over several rounds and can take up to about 20 hours of work.</p></details>
+          <details><summary>Are the companies and data real?</summary><p>No. All companies and records are fictional, built to behave like real business data, with problems planted for participants to find.</p></details>
+        </div>
+      </article>
+
     </div>
   </section>
 </div>
