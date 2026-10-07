@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My AI app</title>
+<style>
+  /* Change anything here. The colours and spacing are yours. */
+  :root { --accent: #3446d8; --ink: #151b33; --muted: #59627a; --line: #dfe3ec; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, "Segoe UI", sans-serif; color: var(--ink); background: #f6f7fb; }
+  main { max-width: 680px; margin: 0 auto; padding: 48px 20px; }
+  h1 { margin: 0 0 6px; font-size: 1.9rem; }
+  p.sub { margin: 0 0 24px; color: var(--muted); }
+  form { display: grid; gap: 12px; }
+  textarea { width: 100%; min-height: 120px; padding: 12px; font: inherit; border: 1px solid var(--line); border-radius: 10px; resize: vertical; }
+  button { justify-self: start; padding: 11px 20px; font: inherit; font-weight: 700; color: #fff; background: var(--accent); border: 0; border-radius: 10px; cursor: pointer; }
+  button:disabled { opacity: .6; cursor: wait; }
+  #out { margin-top: 24px; padding: 18px; background: #fff; border: 1px solid var(--line); border-radius: 12px; white-space: pre-wrap; min-height: 56px; }
+  #out.error { color: #b42318; border-color: #f4b8b3; }
+  #out.empty { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>My AI app</h1>
+  <p class="sub">Replace this line with one sentence about who the app is for.</p>
+  <form id="f">
+    <label for="q">Your question</label>
+    <textarea id="q" placeholder="Type here"></textarea>
+    <button id="go" type="submit">Ask</button>
+  </form>
+  <div id="out" class="empty" aria-live="polite">The answer will appear here.</div>
+</main>
+<script>
+  const form = document.getElementById('f');
+  const q = document.getElementById('q');
+  const go = document.getElementById('go');
+  const out = document.getElementById('out');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const question = q.value.trim();
+    if (!question) { out.className = 'error'; out.textContent = 'Please type a question first.'; return; }
+    go.disabled = true;
+    out.className = 'empty';
+    out.textContent = 'Thinking…';
+    try {
+      const res = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question }) });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+      out.className = '';
+      out.textContent = data.answer;
+    } catch (err) {
+      out.className = 'error';
+      out.textContent = err.message;
+    } finally {
+      go.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

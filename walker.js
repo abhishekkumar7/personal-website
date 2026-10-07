@@ -22,6 +22,7 @@
     about: { costume: 'casual', line: ['about', 'A little about me. AI, teaching and research.'], wave: true },
     research: { costume: 'scientist', line: ['research', 'Lab coat on! Click any paper title to read it.'] },
     programmes: { costume: 'teacher', line: ['programmes', 'Class is in session. Pick a programme, and hover over me for my email.'] },
+    resources: { costume: 'teacher', line: ['resources', 'Tools for your own classroom. Start with the AI app kit.'] },
     contact: { costume: 'board', line: ['contact', "Here's my board. Copy my email, and let's talk."] }
   };
   var SECTION = {
@@ -378,5 +379,6 @@
   });
 
   // Start on whatever page the visitor landed on.
-  onView((location.hash || '#home').slice(1) in VIEW ? (location.hash || '#home').slice(1) : 'home');
+  var firstView = (location.hash || '#home').slice(1).split('/')[0];
+  onView(firstView in VIEW ? firstView : 'home');
 })();

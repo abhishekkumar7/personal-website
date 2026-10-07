@@ -7,3 +7,6 @@ The personal website with a walking illustrated Abhishek on top. His dialogue ap
 - `hyperframes/reel` – source of the expertise reel video.
 
 Serve the folder with any static server, e.g. `python -m http.server`.
+
+## Teaching resources
+`#resources` is a hub for classroom tools. The first is the AI app development kit (`resources/ai-app-kit/`): `starter/` holds the editable source and `AI_App_Development_Kit.zip` is what visitors download (rebuild it after editing the starter). Add a tool by adding a `data-tool-panel` article in `index.html`, a button in `.tr-tools`, and its id to `TOOLS` in `resources.js`.

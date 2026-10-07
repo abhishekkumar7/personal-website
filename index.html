@@ -46,7 +46,7 @@ section.band{padding-block:clamp(48px,7vw,88px)}
 section.band.tint{background:var(--band)}
 .sec-title{font-size:clamp(1.7rem,3.2vw,2.4rem);font-weight:800;margin-top:8px}
 .sec-lede{color:var(--muted);margin-top:12px;max-width:62ch}
-.more{display:inline-block;margin-top:22px;font-weight:700;text-decoration:none}
+.more{display:inline-block;margin-top:6px;font-weight:700;text-decoration:none}
 .more:hover{text-decoration:underline}
 .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.95rem;padding:12px 20px;border-radius:8px;text-decoration:none;border:2px solid currentColor;cursor:pointer}
 .btn.fill{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -83,15 +83,19 @@ section.band.tint{background:var(--band)}
   .stage{min-height:400px}
 }
 
-/* Intro + expertise reel */
-.intro{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(28px,5vw,64px);align-items:center}
-@media (max-width:860px){.intro{grid-template-columns:1fr}}
+/* Intro: topics and reel on the left, portrait on the right */
+.intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
+.intro-main{display:flex;flex-direction:column;gap:clamp(10px,2.2svh,20px);min-width:0}
 .reel{position:relative}
-.reel video{display:block;width:100%;max-width:100%;aspect-ratio:6/5;border-radius:16px;background:var(--navy)}
+.reel video{display:block;width:100%;max-width:100%;height:clamp(110px,24svh,230px);object-fit:cover;border-radius:16px;background:var(--navy)}
+.portrait{margin:0;position:relative;justify-self:center;width:min(100%,calc(100svh - var(--bar) - 80px));aspect-ratio:1/1;perspective:1000px}
+.portrait::before{content:"";position:absolute;inset:6% -5% -5% 8%;border-radius:28px;background:linear-gradient(150deg,#ffb15e,#ff9a3d 60%,#fb8a2c);z-index:0}
+.portrait img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:50% 50%;border-radius:24px;display:block;
+  box-shadow:0 24px 50px rgba(11,16,40,.28);transition:transform .15s linear;will-change:transform}
 .lead{font-size:clamp(1.25rem,2.2vw,1.6rem);font-weight:700;line-height:1.4}
 .lead .it{color:var(--accent)}
 .intro .body{color:var(--muted);margin-top:16px}
-.areas{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:4px}
+.areas{list-style:none;padding:0;margin:0;display:grid;gap:2px}
 .area{display:grid;grid-template-columns:2rem minmax(0,1fr);gap:2px 10px;width:100%;text-align:left;background:none;border:0;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--ink);font:inherit}
 .area:hover,.area[aria-pressed="true"]{background:var(--band)}
 .area .n{font-family:var(--mono);font-size:.8rem;color:var(--muted);padding-top:3px}
@@ -226,8 +230,61 @@ section.band.tint{background:var(--band)}
 footer{background:var(--navy);color:var(--on-navy-muted);font-size:.85rem;padding-block:22px;border-top:1px solid rgba(255,255,255,.08)}
 footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 footer a{color:var(--on-navy)}
+
+/* ---------- Home: every section is one full screen ---------- */
+:root{--foot:68px}
+html{scroll-padding-top:var(--bar);scroll-snap-type:y proximity}
+@media (min-width:900px) and (min-height:560px){html{scroll-snap-type:y mandatory}}
+#v-home > section{min-height:calc(100vh - var(--bar));min-height:calc(100svh - var(--bar));display:flex;flex-direction:column;justify-content:center;scroll-snap-align:start;scroll-snap-stop:always;padding-block:clamp(24px,4svh,56px)}
+#v-home > section > .wrap{width:100%}
+#v-home > .hero.office{padding-block:0;justify-content:stretch}
+#v-home > .hero.office > .wrap{flex:1;display:grid;min-height:0}
+.hero.office .office-grid{min-height:0;align-items:stretch}
+.hero.office .hero-text{align-self:center}
+.hero.office .stage{min-height:0;height:100%}
+.hero.office .stage .props{height:calc(100% - var(--floor) + 8px)}
+.stage .av{--h:clamp(240px,min(26vw,46svh),380px)}
+.hero.office{--floor:clamp(70px,13svh,120px)}
+#v-home > .cta{min-height:calc(100vh - var(--bar) - var(--foot));min-height:calc(100svh - var(--bar) - var(--foot))}
+footer{min-height:var(--foot);display:flex;align-items:center;padding-block:0}
+footer .wrap{width:100%}
+.scrollcue{position:absolute;left:50%;bottom:calc(var(--floor) + 10px);transform:translateX(-50%);z-index:3;width:44px;height:44px;border-radius:50%;border:2px solid #1d1530;background:rgba(255,255,255,.55);color:#1d1530;cursor:pointer;display:grid;place-items:center;animation:cue 1.8s ease-in-out infinite}
+.scrollcue svg{width:20px;height:20px}
+@keyframes cue{50%{transform:translate(-50%,6px)}}
+.dots-nav{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:35;display:flex;flex-direction:column;gap:10px}
+.dots-nav[hidden]{display:none}
+.dots-nav button{width:12px;height:12px;border-radius:50%;border:2px solid var(--ink);background:transparent;padding:0;cursor:pointer;opacity:.5;transition:all .2s}
+.dots-nav button.on{background:var(--accent);border-color:var(--accent);opacity:1;transform:scale(1.25)}
+.nav a .full{display:inline}
+@media (max-width:640px){.nav a .full{display:none}:root{--foot:96px}.bar .wrap{padding-inline:6px}.nav{justify-content:center;width:100%}.nav a{font-size:.62rem;letter-spacing:.035em;padding:9px 5px}}
+@media (max-width:900px){
+  .intro{grid-template-columns:1fr;gap:14px}
+  .portrait{order:-1;width:min(52vw,27svh);justify-self:center;aspect-ratio:1/1}
+  .intro .lead{font-size:1.08rem}
+  #v-home .sec-title{font-size:1.45rem}
+  .group li{font-size:.9rem;line-height:1.3}
+  .group h3{font-size:1.05rem}
+  .covers{margin-top:12px}
+  #v-home .more{margin-top:2px}
+  .reel{display:none}
+  .covers{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+  .cover .art{padding:14px 12px;aspect-ratio:4/5}
+  .cover .art strong{font-size:.95rem}
+  .cover p{margin-top:6px;font-size:.82rem}
+  .groups{gap:12px;margin-top:16px}
+  .group{padding:14px 16px}
+  .group ul{margin-top:8px;gap:4px}
+  .dots-nav{display:none}
+}
+@media (max-width:820px){
+  .hero.office .office-grid{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .hero-text{padding-block:56px 0}
+  .hero.office .stage{min-height:240px}
+}
+@media (prefers-reduced-motion:reduce){.scrollcue{animation:none}.portrait img{transition:none}}
 </style>
 <link rel="stylesheet" href="walker.css">
+<link rel="stylesheet" href="resources.css">
 </head>
 <body>
 <header class="bar">
@@ -236,7 +293,8 @@ footer a{color:var(--on-navy)}
     <nav class="nav" aria-label="Pages">
       <a href="#about" data-v="about">About</a>
       <a href="#research" data-v="research">Research</a>
-      <a href="#programmes" data-v="programmes">AI Programmes</a>
+      <a href="#programmes" data-v="programmes"><span class="full">AI </span>Programmes</a>
+      <a href="#resources" data-v="resources"><span class="full">Teaching </span>Resources</a>
       <a href="#contact" data-v="contact">Contact</a>
     </nav>
   </div>
@@ -288,11 +346,11 @@ footer a{color:var(--on-navy)}
 
   <section class="band" aria-labelledby="h-intro" data-costume="casual">
     <div class="wrap intro">
-      <div class="reel">
-        <video id="reel" src="media/reel.mp4" poster="media/reel-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="Animated reel: an AI agent calling tools, a model learning a decision boundary, and an LLM coding text checked against human coders"></video>
-      </div>
-      <div>
+      <div class="intro-main">
         <p class="lead" id="h-intro">Abhishek Kumar Jha is an Assistant Professor of Information Management &amp; Analytics at <span class="it">SPJIMR, Mumbai</span>, and a former Lecturer at <span class="it">Deakin University</span>.</p>
+        <div class="reel">
+          <video id="reel" src="media/reel.mp4" poster="media/reel-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="Animated reel: an AI agent calling tools, a model learning a decision boundary, and an LLM coding text checked against human coders"></video>
+        </div>
         <ul class="areas" aria-label="Areas of expertise">
           <li><button class="area" type="button" data-i="0" aria-pressed="true"><span class="n">01</span><b>GenAI &amp; Agentic AI for Managers</b><span class="track"><i></i></span></button></li>
           <li><button class="area" type="button" data-i="1" aria-pressed="false"><span class="n">02</span><b>Applied ML &amp; Predictive Analytics</b><span class="track"><i></i></span></button></li>
@@ -300,6 +358,9 @@ footer a{color:var(--on-navy)}
         </ul>
         <a class="more" href="#about">More about Abhishek →</a>
       </div>
+      <figure class="portrait" id="portrait">
+        <img src="media/portrait.webp" alt="Abhishek Kumar Jha in front of a whiteboard that reads Better Decisions with AI" width="900" height="900" loading="lazy">
+      </figure>
     </div>
   </section>
 
@@ -485,6 +546,309 @@ footer a{color:var(--on-navy)}
   </section>
 </div>
 
+<!-- ================= TEACHING RESOURCES ================= -->
+<div class="view" id="v-resources" hidden>
+  <section class="phead"><div class="wrap"><p class="kicker">Teaching resources</p><h1>Tools you can use in your own classroom</h1><p>Hands-on materials from my courses. Use them in a session, adapt them, and tell me how it went.</p></div></section>
+  <section class="band">
+    <div class="wrap tr">
+      <aside class="tr-side" aria-label="Teaching tools">
+        <div>
+          <p class="tr-label">Tools</p>
+          <nav class="tr-tools"><button type="button" class="tr-tool" data-tool="app-dev" aria-current="true"><span class="n">01</span>AI app development</button></nav>
+          <p class="tr-more">More tools will be added here.</p>
+        </div>
+        <div data-tool-aside="app-dev">
+          <p class="tr-label">This kit</p>
+          <nav class="kit-jump" aria-label="Kit phases">
+            <a href="#resources/app-dev" data-jump="kit-p1"><b>1</b>Set up</a>
+            <a href="#resources/app-dev" data-jump="kit-p2"><b>2</b>Prototype locally</a>
+            <a href="#resources/app-dev" data-jump="kit-p3"><b>3</b>Iterate</a>
+          </nav>
+          <div class="kit-prog" style="margin-top:12px">
+            <div class="top"><span>Your team's progress</span><span id="kit-count">0 of 14</span></div>
+            <div class="bar2"><i id="kit-bar"></i></div>
+            <button type="button" id="kit-reset">Clear ticks</button>
+          </div>
+        </div>
+      </aside>
+
+      <article class="kit" id="tool-app-dev" data-tool-panel="app-dev" data-os="mac">
+        <header class="kit-head">
+          <p class="eyebrow">Teaching resource 01</p>
+          <h2>Build an AI-powered web app</h2>
+          <p class="lede">A starter kit for classes that want students to build and test a small AI app. A team goes from an idea to a working prototype on their own computer, then improves it step by step with an AI coding assistant.</p>
+          <ul class="kit-chips">
+            <li>MBA, executive and doctoral classes</li>
+            <li>About an hour to a first version</li>
+            <li>No programming background needed</li>
+            <li>Works on macOS and Windows</li>
+          </ul>
+          <div class="kit-actions">
+            <a class="kit-btn" href="resources/ai-app-kit/AI_App_Development_Kit.zip" download>Download the starter kit (zip)</a>
+            <a class="kit-btn ghost" href="#resources/app-dev" data-jump="kit-p1">Start at step 1</a>
+          </div>
+          <p class="kit-credit">Adapted from the Product Sprint App Development Kit in UCLA Anderson's course <i>The Science and Strategy of AI</i> (<a class="ext" href="https://ucla-anderson-ssai.github.io/SSAI/Product%20Sprint/App_Development_Kit.html" target="_blank" rel="noopener">original kit ↗</a>). This version is written for a different course, stops at your own computer and adds an iteration phase.</p>
+        </header>
+
+        <h3 class="ph" id="kit-intro" style="border-top:0;padding-top:0;margin-top:34px">What this kit is for</h3>
+        <p style="margin-top:10px">The kit gives a team a small working app to start from, so nobody begins with a blank screen. You decide what the app should do, ask an AI coding assistant to customise the starter, run it on your own computer, and keep improving it.</p>
+        <p style="margin-top:10px">The aim is not to turn anyone into a software engineer. It is to understand the workflow behind most AI apps: a person types a request, the app sends it to a language model through an API, the model answers, and the app shows the result. A synthetic dataset is fine for a demo, and an app may build just one useful slice of a bigger idea.</p>
+
+        <figure class="dg" aria-label="Diagram: how an AI app works">
+          <p class="ttl">How an AI app works</p>
+          <div class="flow">
+            <div class="nd">Person<small>types a question</small></div>
+            <div class="lk"><span>question</span><span>answer</span></div>
+            <div class="nd">Web page<small>what people see</small></div>
+            <div class="lk"><span>question</span><span>answer</span></div>
+            <div class="nd hl">Your app's server<small>holds the secret key and the system prompt</small></div>
+            <div class="lk"><span>prompt</span><span>text</span></div>
+            <div class="nd wm">Model API<small>the language model</small></div>
+          </div>
+          <div class="keyline"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v4M21 12v3"/></svg>The API key lives on the server, never in the web page</span></div>
+          <figcaption>Every app you build in this kit follows this loop. Most of what you change later is the page, the system prompt, or both.</figcaption>
+        </figure>
+
+        <figure class="dg" aria-label="Diagram: the three phases">
+          <p class="ttl">The route</p>
+          <div class="road">
+            <div class="nd"><b>Phase 1</b><span>Set up</span><small>files, Node.js, API key</small></div>
+            <div class="nd"><b>Phase 2</b><span>Prototype locally</span><small>plan, build, run, test</small></div>
+            <div class="nd ok"><b>Phase 3</b><span>Iterate</span><small>one improvement at a time</small></div>
+          </div>
+          <p class="road-loop">↺ Phase 3 repeats until the app does what you meant</p>
+        </figure>
+
+        <div class="os-row"><span>Show commands for</span>
+          <div class="os-seg" role="group" aria-label="Operating system"><button type="button" data-os-pick="mac" aria-pressed="true">macOS</button><button type="button" data-os-pick="win" aria-pressed="false">Windows</button></div>
+        </div>
+
+        <!-- ============ PHASE 1 ============ -->
+        <h3 class="ph p1" id="kit-p1"><span class="tag">Phase 1</span>Set up</h3>
+        <p class="ph-sub">You will use the terminal built into your computer: Terminal on macOS, PowerShell on Windows. In the code blocks, type only the command, not the <code class="i">$</code> or <code class="i">PS&gt;</code> at the start. The Copy button leaves those out for you.</p>
+
+        <div class="kit-step" data-step="s1"><span class="num">1</span><h4>Get the starter files</h4>
+          <div class="body">
+            <ol>
+              <li>Download <a class="ext" href="resources/ai-app-kit/AI_App_Development_Kit.zip" download>AI_App_Development_Kit.zip</a> and unzip it.</li>
+              <li>Move the folder to your Desktop and rename it <code class="i">myapp</code>.</li>
+            </ol>
+            <p>Files ending in <code class="i">.md</code> or <code class="i">.env</code>, such as <code class="i">AppPlan.md</code> and <code class="i">local.env</code>, are plain text. Open them in Notepad on Windows or TextEdit on macOS (in TextEdit choose Format → Make Plain Text before you save).</p>
+            <figure class="dg" style="margin:6px 0 0" aria-label="Diagram: what is in the myapp folder">
+              <p class="ttl">What is in the folder</p>
+              <ul class="tree">
+                <li><b>myapp/</b>
+                  <ul>
+                    <li><b class="you">AppPlan.md</b><span class="d">You write the app idea here. It is your instruction to the assistant.</span></li>
+                    <li><b>server.js</b><span class="d">The back end. Holds the system prompt and the call to the model.</span></li>
+                    <li><b>public/index.html</b><span class="d">The page people see. Design changes mostly happen here.</span></li>
+                    <li><b class="secret">local.env</b><span class="d">Your private API key. Never share it or paste it into a chat.</span></li>
+                    <li><b>package.json</b><span class="d">Tells Node.js how to start the app with <code class="i">npm start</code>.</span></li>
+                    <li><b>README.md</b><span class="d">A short guide for you and your assistant.</span></li>
+                  </ul>
+                </li>
+              </ul>
+            </figure>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <div class="kit-step" data-step="s2"><span class="num">2</span><h4>Open the folder in an AI coding assistant</h4>
+          <div class="body">
+            <p>Use any assistant that can read and edit files in a folder, for example Claude Code, Codex or Cursor. Your instructor will tell you which one the class uses. Open the <code class="i">myapp</code> folder in it.</p>
+            <p>Then ask it to read before it writes:</p>
+            <div class="say-block"><span class="lbl">Say this to your assistant</span><pre>Read AppPlan.md and README.md in this folder. Do not change anything yet. Tell me what you understand about the project.</pre><button type="button" class="copy-btn">Copy</button></div>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <div class="kit-step" data-step="s3"><span class="num">3</span><h4>Install Node.js</h4>
+          <div class="body">
+            <p>Node.js lets the starter app run on your computer. It comes with <code class="i">npm</code>, which starts the app. The starter needs version 18 or newer and has no other packages to install.</p>
+            <ol>
+              <li>Go to <a class="ext" href="https://nodejs.org/en/download" target="_blank" rel="noopener">nodejs.org/en/download</a> and install the version for your computer (the <span data-os="mac">macOS Installer, .pkg</span><span data-os="win">Windows Installer, .msi</span>).</li>
+              <li data-os="mac">Open Terminal.</li>
+              <li data-os="win">Open the Start menu, search for PowerShell and open it.</li>
+              <li>Check that both tools are installed. Each line should print a version number.</li>
+            </ol>
+            <div class="term" data-os="mac"><span class="os">macOS</span><pre>$ node --version
+$ npm --version</pre><button type="button" class="copy-btn">Copy</button></div>
+            <div class="term" data-os="win"><span class="os">Windows</span><pre>PS&gt; node --version
+PS&gt; npm --version</pre><button type="button" class="copy-btn">Copy</button></div>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <div class="kit-step" data-step="s4"><span class="num">4</span><h4>Get an API key</h4>
+          <div class="body">
+            <p>An API key is a long secret code that lets your app talk to a language model. The starter uses Google's Gemini models, and Google's API has offered a free tier that is usually enough for class exercises (check the current limits). Ask your instructor if the class uses a different provider; your assistant can switch the starter over.</p>
+            <ol>
+              <li>Sign in to a Google account. A personal account is simplest if a school or work account blocks key creation.</li>
+              <li>Open <a class="ext" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com/app/apikey</a> and choose <b>Create API key</b>. If asked, create it in a new project.</li>
+              <li>Copy the key when it appears. It looks like a long string of letters and numbers.</li>
+            </ol>
+            <div class="note safe"><b>Treat the key like a password.</b>Do not paste it into a chat with your assistant, a document, a screenshot or a shared folder. Set a spending limit in the provider's console if it offers one.</div>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <div class="kit-step" data-step="s5"><span class="num">5</span><h4>Put the key in local.env</h4>
+          <div class="body">
+            <p>Open <code class="i">local.env</code> in a plain-text editor and replace <code class="i">your_real_key_here</code> with your key. Save the file.</p>
+            <div class="term"><span class="os">local.env</span><pre>GEMINI_API_KEY=your_real_key_here
+GEMINI_MODEL=gemini-2.5-flash</pre><button type="button" class="copy-btn">Copy</button></div>
+            <p>No key yet? Skip ahead. The starter runs in demo mode and answers with a short message, so you can see the page working before the key is ready.</p>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <!-- ============ PHASE 2 ============ -->
+        <h3 class="ph p2" id="kit-p2"><span class="tag">Phase 2</span>Prototype locally</h3>
+        <p class="ph-sub">Everything from here runs on your own computer. You do not need to finish the whole product. Get a basic version working, then keep building in Phase 3.</p>
+
+        <div class="kit-step" data-step="s6"><span class="num">6</span><h4>Write the plan in AppPlan.md</h4>
+          <div class="body">
+            <p>Open <code class="i">AppPlan.md</code> and fill in the app idea: the use case, the intended user, what the user types, what the model should return, how the model will be guided, and whether the app needs source material or data. This is your direct instruction to the assistant. Perfect is not the goal. A clear, simple first version is.</p>
+            <p>If your app depends on a specific dataset, you can use a classic machine learning model, such as a decision tree or a gradient-boosted model, instead of a language model. Tell your instructor, because the setup changes.</p>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <div class="kit-step" data-step="s7"><span class="num">7</span><h4>Ask the assistant to build version one</h4>
+          <div class="body">
+            <p>Use the strongest model and the deepest reasoning setting your assistant offers for this first build. Use a lighter setting for small edits such as wording or colours.</p>
+            <div class="say-block"><span class="lbl">Say this to your assistant</span><pre>Read AppPlan.md and README.md. Before editing, summarise the app's purpose, the user, the inputs and outputs, and the behaviour the system prompt has to produce. Then build the first working version using the files already in this folder. Treat the design notes in AppPlan.md as requirements. Put the system prompt in one clearly labelled place in server.js so I can edit it. Keep it simple, make it run at http://localhost:3000, and do not add accounts, databases or logins.</pre><button type="button" class="copy-btn">Copy</button></div>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <div class="kit-step" data-step="s8"><span class="num">8</span><h4>Run it on your computer</h4>
+          <div class="body">
+            <p>In the terminal, move into the folder and start the app.</p>
+            <div class="term" data-os="mac"><span class="os">macOS</span><pre>$ cd ~/Desktop/myapp
+$ npm start</pre><button type="button" class="copy-btn">Copy</button></div>
+            <div class="term" data-os="win"><span class="os">Windows</span><pre>PS&gt; cd "$env:USERPROFILE\Desktop\myapp"
+PS&gt; npm start</pre><button type="button" class="copy-btn">Copy</button></div>
+            <p>Open <a class="ext" href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> in your browser. The command keeps running while the app is alive. When you finish testing, click the terminal and press <code class="i">Ctrl+C</code> to stop it.</p>
+            <p>If you see "port 3000 is already in use", another copy is still running. Close other terminal windows and assistant previews, or clear the port:</p>
+            <div class="term" data-os="mac"><span class="os">macOS</span><pre>$ lsof -ti tcp:3000 | xargs kill</pre><button type="button" class="copy-btn">Copy</button></div>
+            <div class="term" data-os="win"><span class="os">Windows</span><pre>PS&gt; Get-NetTCPConnection -LocalPort 3000 | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }</pre><button type="button" class="copy-btn">Copy</button></div>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <div class="kit-step" data-step="s9"><span class="num">9</span><h4>Test it with three questions</h4>
+          <div class="body">
+            <p>Before you change anything, try the three test questions from <code class="i">AppPlan.md</code>: a typical one, a tricky one and an off-topic one. Write down what the app did. You will repeat these tests after every change in Phase 3, and the comparison is how you know whether a change helped.</p>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <!-- ============ PHASE 3 ============ -->
+        <h3 class="ph p3" id="kit-p3"><span class="tag">Phase 3</span>Iterate</h3>
+        <p class="ph-sub">Once the first version runs, improve it. Change one thing at a time so you can tell what each change did.</p>
+
+        <figure class="dg" aria-label="Diagram: the iteration loop">
+          <p class="ttl">The iteration loop</p>
+          <div class="loop">
+            <div class="nd hl">1 · Pick one improvement</div><div class="ar">→</div><div class="nd hl">2 · Ask for exactly that</div>
+            <div class="ar">↑</div><div class="centre">repeat</div><div class="ar">↓</div>
+            <div class="nd ok">4 · Keep it or undo it</div><div class="ar">←</div><div class="nd ok">3 · Run and test</div>
+          </div>
+          <figcaption>Good changes get kept. Changes that make the app worse get undone, and that is learning too.</figcaption>
+        </figure>
+
+        <div class="kit-step" data-step="s10"><span class="num">10</span><h4>Pick one improvement</h4>
+          <div class="body">
+            <p>Choose a single next step. Good candidates:</p>
+            <ul>
+              <li>A clearer app name and one-line description</li>
+              <li>A cleaner visual design</li>
+              <li>A better example question on the page</li>
+              <li>A more specific system prompt</li>
+              <li>A new input field, such as a dropdown for audience or tone</li>
+              <li>A more useful answer format, such as three bullet points and a recommendation</li>
+            </ul>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <div class="kit-step" data-step="s11"><span class="num">11</span><h4>Ask for the change, precisely</h4>
+          <div class="body">
+            <p>A good request says what to change, what to keep, and how you will test it. Vague requests lead to surprise rewrites.</p>
+            <figure class="dg" style="margin:0" aria-label="Diagram: parts of a good change request">
+              <p class="ttl">Anatomy of a good request</p>
+              <div class="anat">
+                <div class="nd"><b>Change</b><span>"Redesign the page as one centred column with a white background and one orange accent."</span></div>
+                <div class="nd"><b>Keep</b><span>"Keep the form, the model call and how I start it with npm start."</span></div>
+                <div class="nd"><b>Test</b><span>"Tell me which files changed and how to check it locally."</span></div>
+              </div>
+            </figure>
+            <div class="pb" id="pb">
+              <h5>Request builder</h5>
+              <label>What kind of change?
+                <select id="pb-type">
+                  <option value="design">Design of the page</option>
+                  <option value="prompt">Wording of the system prompt</option>
+                  <option value="input">A new input field</option>
+                  <option value="format">Format of the answer</option>
+                  <option value="saved">Something that remembers (saved answers)</option>
+                </select>
+              </label>
+              <label>What should change?
+                <textarea id="pb-what" rows="3"></textarea>
+              </label>
+              <div class="row"><button type="button" class="ghost" id="pb-example">Fill in an example</button></div>
+              <label>What must stay exactly the same?
+                <input id="pb-keep" value="the form fields, the submit button and the model call">
+              </label>
+              <label>How will you test it?
+                <input id="pb-test" value="run it locally and try my three test questions">
+              </label>
+              <label>Your request, ready to paste
+                <span class="out"><textarea id="pb-out" rows="6" readonly></textarea><button type="button" class="copy-btn" data-target="pb-out">Copy</button></span>
+              </label>
+            </div>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <div class="kit-step" data-step="s12"><span class="num">12</span><h4>Run it again and compare</h4>
+          <div class="body">
+            <p>Stop the app with <code class="i">Ctrl+C</code>, start it again, and repeat your three test questions.</p>
+            <div class="term"><span class="os">Terminal</span><pre>npm start</pre><button type="button" class="copy-btn">Copy</button></div>
+            <p>Add one line to the change log at the bottom of <code class="i">AppPlan.md</code>: what you changed and what you learned. A short log makes a strong final presentation.</p>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <div class="kit-step" data-step="s13"><span class="num">13</span><h4>Keep it or undo it</h4>
+          <div class="body">
+            <p>Before each change, save a copy of the working version. The simplest way is to copy the whole <code class="i">myapp</code> folder and rename the copy <code class="i">myapp-v1</code>, then <code class="i">myapp-v2</code>, and so on. If you are comfortable with git, commit instead:</p>
+            <div class="term"><span class="os">Terminal</span><pre>git init
+git add .
+git commit -m "v1 works"</pre><button type="button" class="copy-btn">Copy</button></div>
+            <p>The starter's <code class="i">.gitignore</code> already keeps <code class="i">local.env</code> out of git, so your key will not be saved. If a change made things worse, ask the assistant to undo it, or go back to the saved copy.</p>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <div class="kit-step" data-step="s14"><span class="num">14</span><h4>Show it to others, without putting it online</h4>
+          <div class="body">
+            <p>For this course the app stays on your computer. Present it live from your laptop, or record a two-minute screen video of your three test questions and one improvement. Never send your <code class="i">local.env</code> file or screenshots that show your key.</p>
+          </div>
+          <label class="chk"><input type="checkbox"> Done</label>
+        </div>
+
+        <div class="kit-end">
+          <h4>If you get stuck</h4>
+          <p>Do not guess. Copy the exact error message, tell your assistant which command you ran, and ask it to explain the likely cause before it edits anything. Using this kit in your own class? I would like to hear how it went: <a href="#contact">get in touch</a>.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+
 <!-- ================= CONTACT ================= -->
 <div class="view" id="v-contact" hidden>
   <section class="phead"><div class="wrap"><p class="kicker">Contact</p><h1>Planning an AI programme, keynote or research collaboration?</h1></div></section>
@@ -509,14 +873,14 @@ footer a{color:var(--on-navy)}
 
 <script>
 (function(){
-  var VIEWS = ['home','about','research','programmes','contact'];
+  var VIEWS = ['home','about','research','programmes','resources','contact'];
   var reel = document.getElementById('reel');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var paused = { reel: reduce };
 
   function play(v){ var p = v.play(); if (p && p.catch) p.catch(function(){}); }
   function show(){
-    var v = (location.hash || '#home').slice(1);
+    var v = (location.hash || '#home').slice(1).split('/')[0];
     if (VIEWS.indexOf(v) < 0) v = 'home';
     VIEWS.forEach(function(n){ document.getElementById('v-' + n).hidden = n !== v; });
     document.querySelectorAll('.nav a').forEach(function(a){
@@ -574,5 +938,7 @@ footer a{color:var(--on-navy)}
 })();
 </script>
 <script src="walker.js" defer></script>
+<script src="extras.js" defer></script>
+<script src="resources.js" defer></script>
 </body>
 </html>
