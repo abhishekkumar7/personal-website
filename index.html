@@ -615,6 +615,7 @@ footer .wrap{width:100%}
             <li>No programming background needed</li>
             <li>Works on macOS and Windows</li>
           </ul>
+          <p class="kit-credit">Updated 14 October 2026: the starter now uses Gemini 3.8 Flash and retries by itself, for up to a minute, when the model is busy. If you downloaded it earlier, please download it again.</p>
           <div class="kit-actions">
             <a class="kit-btn" href="resources/ai-app-kit/AI_App_Development_Kit.zip" download>Download the starter kit (zip)</a>
             <a class="kit-btn ghost" href="#resources/app-dev" data-jump="kit-p1">Start at step 1</a>
@@ -727,7 +728,9 @@ PS&gt; npm --version</pre><button type="button" class="copy-btn">Copy</button></
           <div class="body">
             <p>Open <code class="i">local.env</code> in a plain-text editor and replace <code class="i">your_real_key_here</code> with your key. Save the file.</p>
             <div class="term"><span class="os">local.env</span><pre>GEMINI_API_KEY=your_real_key_here
-GEMINI_MODEL=gemini-2.5-flash</pre><button type="button" class="copy-btn">Copy</button></div>
+GEMINI_MODEL=gemini-3.8-flash
+GEMINI_FALLBACK_MODEL=gemini-3.5-flash-lite</pre><button type="button" class="copy-btn">Copy</button></div>
+            <p>The second line is the main model and the third is the one used if the first is busy or missing. Model names change from time to time. If you see "not found", the terminal prints the names your key can use when the app starts, and you can change the line in <code class="i">local.env</code>.</p>
             <p>No key yet? Skip ahead. The starter runs in demo mode and answers with a short message, so you can see the page working before the key is ready.</p>
           </div>
           <label class="chk"><input type="checkbox"> Done</label>
@@ -873,7 +876,7 @@ git commit -m "v1 works"</pre><button type="button" class="copy-btn">Copy</butto
 
         <div class="kit-end">
           <h4>If you get stuck</h4>
-          <p>Do not guess. Copy the exact error message, tell your assistant which command you ran, and ask it to explain the likely cause before it edits anything. Using this kit in your own class? I would like to hear how it went: <a href="#contact">get in touch</a>.</p>
+          <p>Do not guess. Copy the exact error message, tell your assistant which command you ran, and ask it to explain the likely cause before it edits anything. A message that the model is busy needs no action, because the app retries by itself for up to a minute. If it still fails, wait a minute and try again. Using this kit in your own class? I would like to hear how it went: <a href="#contact">get in touch</a>.</p>
         </div>
       </article>
 

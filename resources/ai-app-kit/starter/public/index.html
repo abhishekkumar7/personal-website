@@ -19,6 +19,7 @@
   #out { margin-top: 24px; padding: 18px; background: #fff; border: 1px solid var(--line); border-radius: 12px; white-space: pre-wrap; min-height: 56px; }
   #out.error { color: #b42318; border-color: #f4b8b3; }
   #out.empty { color: var(--muted); }
+  .meta { margin: 8px 2px 0; font-size: .85rem; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -31,12 +32,14 @@
     <button id="go" type="submit">Ask</button>
   </form>
   <div id="out" class="empty" aria-live="polite">The answer will appear here.</div>
+  <p id="meta" class="meta"></p>
 </main>
 <script>
   const form = document.getElementById('f');
   const q = document.getElementById('q');
   const go = document.getElementById('go');
   const out = document.getElementById('out');
+  const meta = document.getElementById('meta');
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const question = q.value.trim();
@@ -44,16 +47,23 @@
     go.disabled = true;
     out.className = 'empty';
     out.textContent = 'Thinking…';
+    meta.textContent = '';
+    // If the model is busy, the server retries by itself for up to a minute. Say so, so nobody clicks again.
+    const slow = setTimeout(() => {
+      out.textContent = 'Still working. The model is busy, so the app is trying again automatically. This can take up to a minute.';
+    }, 8000);
     try {
       const res = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question }) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Something went wrong.');
       out.className = '';
       out.textContent = data.answer;
+      meta.textContent = data.model && data.model !== 'demo' ? 'Answered by ' + data.model : '';
     } catch (err) {
       out.className = 'error';
       out.textContent = err.message;
     } finally {
+      clearTimeout(slow);
       go.disabled = false;
     }
   });
