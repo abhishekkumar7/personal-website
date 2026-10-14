@@ -707,6 +707,7 @@ footer .wrap{width:100%}
 $ npm --version</pre><button type="button" class="copy-btn">Copy</button></div>
             <div class="term" data-os="win"><span class="os">Windows</span><pre>PS&gt; node --version
 PS&gt; npm --version</pre><button type="button" class="copy-btn">Copy</button></div>
+            <div class="note" data-os="win"><b>A red "exception" or "running scripts is disabled" error?</b>This is usually a PowerShell security setting, not a problem with Node.js. Copy the whole error, paste it into Claude or ChatGPT, and it will give you a short command to allow it, something like <code class="i">Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</code>. Paste that line into the same terminal, then try again.</div>
           </div>
           <label class="chk"><input type="checkbox"> Done</label>
         </div>
@@ -763,10 +764,18 @@ GEMINI_FALLBACK_MODEL=gemini-3.5-flash-lite</pre><button type="button" class="co
 $ npm start</pre><button type="button" class="copy-btn">Copy</button></div>
             <div class="term" data-os="win"><span class="os">Windows</span><pre>PS&gt; cd "$env:USERPROFILE\Desktop\myapp"
 PS&gt; npm start</pre><button type="button" class="copy-btn">Copy</button></div>
+            <div class="note" data-os="win"><b>Does <code class="i">npm start</code> give an error?</b>Type <code class="i">npm.cmd start</code> instead. It often works better. If the error says "running scripts is disabled", see the note in step 3.</div>
             <p>Open <a class="ext" href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> in your browser. The command keeps running while the app is alive. When you finish testing, click the terminal and press <code class="i">Ctrl+C</code> to stop it.</p>
             <p>If you see "port 3000 is already in use", another copy is still running. Close other terminal windows and assistant previews, or clear the port:</p>
             <div class="term" data-os="mac"><span class="os">macOS</span><pre>$ lsof -ti tcp:3000 | xargs kill</pre><button type="button" class="copy-btn">Copy</button></div>
             <div class="term" data-os="win"><span class="os">Windows</span><pre>PS&gt; Get-NetTCPConnection -LocalPort 3000 | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }</pre><button type="button" class="copy-btn">Copy</button></div>
+            <div class="note"><b>If the model is busy or has been renamed</b>
+              <ul>
+                <li><strong>Busy:</strong> the app retries by itself, waiting a little longer each time, for up to one minute. You do not need to click again. If the main model keeps failing, it tries a second model.</li>
+                <li><strong>Model not found:</strong> model names change. Open <code class="i">local.env</code> and set <code class="i">GEMINI_MODEL</code> (and, if you like, <code class="i">GEMINI_FALLBACK_MODEL</code>). When the app starts, it prints the model names your key can use.</li>
+                <li><strong>Wrong key:</strong> you will see "API key not valid" straight away. Check the key in <code class="i">local.env</code>.</li>
+              </ul>
+            </div>
           </div>
           <label class="chk"><input type="checkbox"> Done</label>
         </div>
@@ -876,7 +885,7 @@ git commit -m "v1 works"</pre><button type="button" class="copy-btn">Copy</butto
 
         <div class="kit-end">
           <h4>If you get stuck</h4>
-          <p>Do not guess. Copy the exact error message, tell your assistant which command you ran, and ask it to explain the likely cause before it edits anything. A message that the model is busy needs no action, because the app retries by itself for up to a minute. If it still fails, wait a minute and try again. Using this kit in your own class? I would like to hear how it went: <a href="#contact">get in touch</a>.</p>
+          <p>Any other error: do not guess. Copy the error exactly as you see it, paste it into Claude or ChatGPT, and ask it to explain the problem and give you a command to fix it. This solves most problems. Tell it which command you ran, and ask it to explain the likely cause before it edits any files. A message that the model is busy needs no action, because the app retries by itself for up to a minute. If it still fails, wait a minute and try again. Using this kit in your own class? I would like to hear how it went: <a href="#contact">get in touch</a>.</p>
         </div>
       </article>
 

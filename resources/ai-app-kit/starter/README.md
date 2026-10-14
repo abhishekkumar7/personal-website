@@ -11,6 +11,11 @@ A tiny web app that sends a question to a language model and shows the answer. I
 
 No key yet? The app still runs and answers with a demo message, so you can see the page working.
 
+## Common errors on Windows
+- `npm start` gives an error: type `npm.cmd start` instead. It often works better.
+- `npm --version` (or any npm command) gives a red "exception" or "running scripts is disabled" error: this is usually a PowerShell security setting. Copy the whole error, paste it into Claude or ChatGPT, and it will give you a short command to allow it, something like `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`. Paste that line into the same terminal, then try again.
+- Any other error: copy the error exactly as you see it, paste it into Claude or ChatGPT, and ask it to explain the problem and give you a command to fix it. This solves most problems.
+
 ## If the model is busy or has been renamed
 - **Busy:** the app retries by itself, waiting a little longer each time, for up to one minute. You do not need to click again. If the main model keeps failing, it tries a second model.
 - **Model not found:** model names change. Open `local.env` and set `GEMINI_MODEL` (and, if you like, `GEMINI_FALLBACK_MODEL`). When the app starts, it prints the model names your key can use.

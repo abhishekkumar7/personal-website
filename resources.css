@@ -240,3 +240,6 @@
 
 .kit h3.ph{flex-wrap:wrap}
 .kit h3.ph .tag{white-space:nowrap}
+
+.note ul{margin:8px 0 0;padding-left:1.2rem;display:grid;gap:6px}
+.note code.i{white-space:normal}
