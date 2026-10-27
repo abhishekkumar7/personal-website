@@ -238,6 +238,9 @@ html{scroll-padding-top:var(--bar);scroll-snap-type:y proximity}
 #v-home > section{min-height:calc(100vh - var(--bar));min-height:calc(100svh - var(--bar));display:flex;flex-direction:column;justify-content:center;scroll-snap-align:start;scroll-snap-stop:always;padding-block:clamp(24px,4svh,56px)}
 #v-home > section > .wrap{width:100%}
 #v-home > .hero.office{padding-block:0;justify-content:stretch}
+/* The home page is a single screen: the hero plus the footer, nothing to scroll. */
+body{margin:0}
+#v-home > .hero.office{min-height:calc(100vh - var(--bar) - var(--foot));min-height:calc(100svh - var(--bar) - var(--foot))}
 #v-home > .hero.office > .wrap{flex:1;display:grid;min-height:0}
 .hero.office .office-grid{min-height:0;align-items:stretch}
 .hero.office .hero-text{align-self:center}
@@ -344,75 +347,6 @@ footer .wrap{width:100%}
     </div>
   </section>
 
-  <section class="band" aria-labelledby="h-intro" data-costume="casual">
-    <div class="wrap intro">
-      <div class="intro-main">
-        <p class="lead" id="h-intro">Abhishek Kumar Jha is an Assistant Professor of Information Management &amp; Analytics at <span class="it">SPJIMR, Mumbai</span>, and a former Lecturer at <span class="it">Deakin University</span>.</p>
-        <div class="reel">
-          <video id="reel" src="media/reel.mp4" poster="media/reel-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="Animated reel: an AI agent calling tools, a model learning a decision boundary, and an LLM coding text checked against human coders"></video>
-        </div>
-        <ul class="areas" aria-label="Areas of expertise">
-          <li><button class="area" type="button" data-i="0" aria-pressed="true"><span class="n">01</span><b>GenAI &amp; Agentic AI for Managers</b><span class="track"><i></i></span></button></li>
-          <li><button class="area" type="button" data-i="1" aria-pressed="false"><span class="n">02</span><b>Applied ML &amp; Predictive Analytics</b><span class="track"><i></i></span></button></li>
-          <li><button class="area" type="button" data-i="2" aria-pressed="false"><span class="n">03</span><b>AI Research Methods</b><span class="track"><i></i></span></button></li>
-        </ul>
-        <a class="more" href="#about">More about Abhishek →</a>
-      </div>
-      <figure class="portrait" id="portrait">
-        <img src="media/portrait.webp" alt="Abhishek Kumar Jha in front of a whiteboard that reads Better Decisions with AI" width="900" height="900" loading="lazy">
-      </figure>
-    </div>
-  </section>
-
-  <section class="band tint" aria-labelledby="h-feat" data-costume="scientist">
-    <div class="wrap">
-      <p class="kicker">Research</p>
-      <h2 class="sec-title" id="h-feat">Featured research</h2>
-      <div class="covers">
-        <a class="cover" href="https://doi.org/10.1016/j.jretconser.2025.104480">
-          <div class="art"><small>Journal of Retailing and Consumer Services</small><strong>Stop sabotaging your influencers</strong><span>2026</span></div>
-          <p><b>Read →</b></p>
-        </a>
-        <a class="cover" href="https://aisel.aisnet.org/cais/vol59/iss1/19/">
-          <div class="art"><small>Communications of the AIS</small><strong>Google's Gemini image generation: AI bias and the rewriting of history</strong><span>2026</span></div>
-          <p><b>Read →</b></p>
-        </a>
-        <a class="cover" href="https://doi.org/10.1108/MIP-04-2023-0149">
-          <div class="art"><small>Marketing Intelligence &amp; Planning</small><strong>Influencer recommendation system</strong><span>2023</span></div>
-          <p><b>Read →</b></p>
-        </a>
-        <a class="cover" href="https://www.tandfonline.com/doi/full/10.1080/10919392.2023.2253086">
-          <div class="art"><small>Journal of Organizational Computing &amp; E-Commerce</small><strong>Don't fool me, as it is your loss</strong><span>2023</span></div>
-          <p><b>Read →</b></p>
-        </a>
-      </div>
-      <a class="more" href="#research">All research →</a>
-    </div>
-  </section>
-
-  <section class="band" aria-labelledby="h-work" data-costume="teacher">
-    <div class="wrap">
-      <p class="kicker">AI Programmes</p>
-      <h2 class="sec-title" id="h-work">Work with Abhishek</h2>
-      
-      <div class="groups">
-        <div class="group"><h3>Business &amp; strategy</h3>
-          <ul><li>Generative AI for Business Leaders</li><li>AI &amp; Machine Learning for Managers</li><li>AI Strategy for the Digital Business</li><li>Generative AI for Business Certification (online)</li></ul></div>
-        <div class="group build"><h3>Hands-on build</h3>
-          <ul><li>Agentic AI: Designing Autonomous Workflows</li><li>Maker Lab: Build with AI</li><li>Influencer &amp; Social Media Analytics with AI</li></ul></div>
-        <div class="group res"><h3>Research</h3>
-          <ul><li>Theory and Theorizing</li><li>AI Research Methods</li></ul></div>
-      </div>
-      <a class="more" href="#programmes">See all programmes →</a>
-    </div>
-  </section>
-
-  <section class="band cta" aria-labelledby="h-cta" data-costume="board">
-    <div class="wrap">
-      <div><h2 id="h-cta">Bring an AI programme to your team</h2><p>Tell me your audience and goals. I'll propose a format.</p></div>
-      <div class="mailbox"><code class="mail">abhishek.jha@spjimr.org</code><button type="button" class="copy">Copy email</button></div>
-    </div>
-  </section>
 </div>
 
 <!-- ================= ABOUT ================= -->
@@ -1436,11 +1370,6 @@ Start by asking: &quot;What task would you like help with?&quot;
 <script>
 (function(){
   var VIEWS = ['home','about','research','programmes','resources','contact'];
-  var reel = document.getElementById('reel');
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var paused = { reel: reduce };
-
-  function play(v){ var p = v.play(); if (p && p.catch) p.catch(function(){}); }
   function show(){
     var v = (location.hash || '#home').slice(1).split('/')[0];
     if (VIEWS.indexOf(v) < 0) v = 'home';
@@ -1448,40 +1377,10 @@ Start by asking: &quot;What task would you like help with?&quot;
     document.querySelectorAll('.nav a').forEach(function(a){
       if (a.getAttribute('data-v') === v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
     });
-    [reel].forEach(function(vid){ if (v === 'home' && !paused[vid.id]) play(vid); else vid.pause(); });
     window.scrollTo(0, 0);
     document.dispatchEvent(new CustomEvent('viewchange', { detail: v }));
   }
   window.addEventListener('hashchange', show);
-
-  if (reduce){ [reel].forEach(function(vid){ vid.removeAttribute('autoplay'); vid.pause(); }); }
-  document.querySelectorAll('.vbtn').forEach(function(btn){
-    var vid = document.getElementById(btn.getAttribute('data-vid'));
-    if (reduce) btn.textContent = 'Play';
-    btn.addEventListener('click', function(){
-      if (vid.paused){ paused[vid.id] = false; play(vid); btn.textContent = 'Pause'; }
-      else { paused[vid.id] = true; vid.pause(); btn.textContent = 'Play'; }
-    });
-  });
-
-  // Expertise rows act as chapter controls for the reel (3 scenes x 4 s)
-  var SCENE = 4, current = -1;
-  var areas = document.querySelectorAll('.area');
-  var bars = document.querySelectorAll('.area .track i');
-  function tick(){
-    var t = reel.currentTime || 0, i = Math.min(2, Math.floor(t / SCENE));
-    if (i !== current){ current = i; areas.forEach(function(a, k){ a.setAttribute('aria-pressed', k === i ? 'true' : 'false'); }); }
-    bars.forEach(function(b, k){ b.style.transform = 'scaleX(' + (k === i ? Math.min(1, (t - k * SCENE) / SCENE) : 0) + ')'; });
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-  areas.forEach(function(a){
-    a.addEventListener('click', function(){
-      var i = +a.getAttribute('data-i');
-      try { reel.currentTime = i * SCENE + (paused.reel ? 2.6 : 0.05); } catch(e){}
-      if (!paused.reel) play(reel);
-    });
-  });
 
   // Copy email buttons
   document.querySelectorAll('.copy').forEach(function(btn){
@@ -1500,7 +1399,6 @@ Start by asking: &quot;What task would you like help with?&quot;
 })();
 </script>
 <script src="walker.js?v=mk5" defer></script>
-<script src="extras.js" defer></script>
 <script src="resources.js?v=sy1" defer></script>
 </body>
 </html>
