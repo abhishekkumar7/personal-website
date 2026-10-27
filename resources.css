@@ -29,8 +29,8 @@
 .tr-soon small{font-size:.78rem}
 .tr-soon .tx{display:grid;gap:2px}
 @media (max-width:900px){
-  .tr-tools{grid-auto-flow:column;grid-auto-columns:minmax(250px,78%);overflow-x:auto;scroll-snap-type:x proximity;padding:4px 2px 10px;margin-inline:-2px;scrollbar-width:thin}
-  .tr-tool,.tr-soon{scroll-snap-align:start}
+  .tr-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tr-soon{display:none}
   .tr-tool:hover{transform:none}
 }
 @media (prefers-reduced-motion:reduce){.tr-tool,.tr-tool::before,.tr-tool .ic{transition:none}.tr-tool:hover{transform:none}}
@@ -381,3 +381,4 @@
 .sy-pack .sim-card:nth-child(3){border-top-color:var(--res)}
 .sy-pack p.sy-inst{font-size:.84rem;color:var(--ink);font-weight:600;border-top:1px solid var(--line);padding-top:8px;margin-top:10px}
 @media (max-width:720px){.sy-pack{grid-template-columns:1fr}}
+@media (max-width:520px){.tr-tools{grid-template-columns:minmax(0,1fr);gap:8px}.tr-tool{padding:9px 12px}.tr-tool .ic{width:36px;height:36px}.tr-tool small{display:none}}
