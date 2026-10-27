@@ -11,7 +11,7 @@
   function set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } }
 
   /* ---------- which tool is open: #resources/<tool> ---------- */
-  var TOOLS = ['app-dev', 'multi-agent', 'cases', 'prompting'];
+  var TOOLS = ['app-dev', 'multi-agent', 'cases', 'prompting', 'sahyadri'];
   var tabs = root.querySelectorAll('.tr-tool');
   var panels = root.querySelectorAll('[data-tool-panel]');
   var asides = root.querySelectorAll('[data-tool-aside]');
@@ -218,5 +218,71 @@
       paintRequest();
     });
     paintRequest();
+  }
+
+  /* ---------- AI adoption lab (Sahyadri): one-task value calculator and copy buttons ---------- */
+  var sy = document.getElementById('tool-sahyadri');
+  if (sy) {
+    sy.addEventListener('click', function (e) {
+      var btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      var pre = btn.parentNode.querySelector('pre');
+      copyText(pre.textContent.trim()).then(function () {
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.textContent = 'Copy'; }, 1300);
+      }, function () {
+        btn.textContent = 'Select and copy';
+        setTimeout(function () { btn.textContent = 'Copy'; }, 2200);
+      });
+    });
+    var inputs = Array.prototype.slice.call(sy.querySelectorAll('#sy-calc input[data-k]'));
+    var defaults = {};
+    inputs.forEach(function (i) { defaults[i.getAttribute('data-k')] = i.value; });
+    var rows = document.getElementById('sy-rows'), netEl = document.getElementById('sy-net'), payEl = document.getElementById('sy-pay');
+    function v(k) {
+      var n = parseFloat(sy.querySelector('input[data-k="' + k + '"]').value);
+      return isFinite(n) ? n : 0;
+    }
+    function num(n, d) { return n.toLocaleString('en-IN', { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }); }
+    function lakh(n) { return 'Rs ' + num(n, 1) + ' lakh'; }
+    function esc(t) { return String(t).replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
+    function calc() {
+      var effect = v('claim') * (1 - v('disc') / 100);
+      var saved = v('mins') * effect / 100;
+      var items = v('items') * (1 + v('grow') / 100);
+      var hours = v('adopt') / 100 * items * saved / 60;
+      var timeVal = hours * v('wage') * v('real') / 100 / 1e5;
+      var errVal = v('adopt') / 100 * items * (v('err0') - v('err1')) / 100 * v('cpe') * v('ereal') / 100 / 1e5;
+      var cost = v('tok') + v('run');
+      var net = timeVal + errVal - cost;
+      var r = [
+        ['Effect used', num(v('claim')) + '% claim × ' + num(100 - v('disc')) + '% kept', num(effect, 1) + '%'],
+        ['Minutes saved per item', num(v('mins'), 1) + ' × ' + num(effect, 1) + '%', num(saved, 2) + ' min'],
+        ['Items in year 1', num(v('items')) + ' × ' + num(1 + v('grow') / 100, 2), num(items)],
+        ['Hours saved', num(v('adopt')) + '% adoption × items × ' + num(saved, 2) + ' ÷ 60', num(hours)],
+        ['Cash value of time', num(hours) + ' h × Rs ' + num(v('wage')) + ' × ' + num(v('real')) + '%', lakh(timeVal)],
+        ['Value of fewer errors', num(v('adopt')) + '% × items × (' + num(v('err0'), 1) + '% − ' + num(v('err1'), 1) + '%) × Rs ' + num(v('cpe')) + ' × ' + num(v('ereal')) + '%', lakh(errVal)],
+        ['Costs in year 1', 'usage ' + num(v('tok'), 2) + ' + run ' + num(v('run'), 1), lakh(cost)]
+      ];
+      rows.innerHTML = r.map(function (x, i) {
+        return '<tr' + (i === 6 ? ' class="neg"' : '') + '><td>' + esc(x[0]) + '</td><td>' + esc(x[1]) + '</td><td>' + esc(x[2]) + '</td></tr>';
+      }).join('');
+      netEl.textContent = lakh(net);
+      netEl.parentNode.classList.toggle('neg', net < 0);
+      var once = v('once');
+      var share = once > 0 ? Math.max(0, net) / once * 100 : 0;
+      var msg;
+      if (once <= 0) msg = 'Enter a one-time spend to see how much of it year 1 recovers.';
+      else if (net <= 0) msg = 'Year 1 does not cover its running costs, so none of the one-time spend of ' + lakh(once) + ' comes back.';
+      else if (share >= 100) msg = 'Year 1 alone pays back the one-time spend of ' + lakh(once) + '.';
+      else msg = 'Year 1 recovers ' + num(share) + '% of the one-time spend of ' + lakh(once) + '. Years 2 and 3, with higher adoption, have to do the rest.';
+      payEl.innerHTML = esc(msg) + '<i><em style="width:' + Math.min(100, share).toFixed(1) + '%"></em></i>';
+    }
+    inputs.forEach(function (i) { i.addEventListener('input', calc); });
+    document.getElementById('sy-reset').addEventListener('click', function () {
+      inputs.forEach(function (i) { i.value = defaults[i.getAttribute('data-k')]; });
+      calc();
+    });
+    calc();
   }
 })();

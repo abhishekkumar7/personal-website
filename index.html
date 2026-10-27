@@ -14,7 +14,7 @@
 :root{
   --paper:#ffffff; --band:#f2f4f9; --sheet:#ffffff; --ink:#151b33; --muted:#59627a; --line:#dfe3ec;
   --navy:#0b1028; --navy-2:#151c44; --on-navy:#eef1fb; --on-navy-muted:#b4bce0;
-  --accent:#3446d8; --accent-soft:#e7eafc; --warm:#c47f12; --warm-soft:#fcf1dd; --res:#0d7a6a; --res-soft:#dcf2ee; --pg:#9b2f6f; --pg-soft:#f8e6f0;
+  --accent:#3446d8; --accent-soft:#e7eafc; --warm:#c47f12; --warm-soft:#fcf1dd; --res:#0d7a6a; --res-soft:#dcf2ee; --pg:#9b2f6f; --pg-soft:#f8e6f0; --sy:#3d7a1c; --sy-soft:#e6f2da;
   --sans:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
   --serif:"Literata",Georgia,"Times New Roman",serif;
   --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
@@ -23,13 +23,13 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#0e1224; --band:#131834; --sheet:#171d38; --ink:#e9ecf6; --muted:#a2aac2; --line:#28304f;
-    --accent:#93a0ff; --accent-soft:#1f2650; --warm:#f0b24a; --warm-soft:#2d2513; --res:#55cbb6; --res-soft:#12312c; --pg:#f08cc3; --pg-soft:#3a1730;
+    --accent:#93a0ff; --accent-soft:#1f2650; --warm:#f0b24a; --warm-soft:#2d2513; --res:#55cbb6; --res-soft:#12312c; --pg:#f08cc3; --pg-soft:#3a1730; --sy:#9ed468; --sy-soft:#1e2c12;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --paper:#0e1224; --band:#131834; --sheet:#171d38; --ink:#e9ecf6; --muted:#a2aac2; --line:#28304f;
-  --accent:#93a0ff; --accent-soft:#1f2650; --warm:#f0b24a; --warm-soft:#2d2513; --res:#55cbb6; --res-soft:#12312c; --pg:#f08cc3; --pg-soft:#3a1730;
+  --accent:#93a0ff; --accent-soft:#1f2650; --warm:#f0b24a; --warm-soft:#2d2513; --res:#55cbb6; --res-soft:#12312c; --pg:#f08cc3; --pg-soft:#3a1730; --sy:#9ed468; --sy-soft:#1e2c12;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -284,7 +284,7 @@ footer .wrap{width:100%}
 @media (prefers-reduced-motion:reduce){.scrollcue{animation:none}.portrait img{transition:none}}
 </style>
 <link rel="stylesheet" href="walker.css?v=mk4">
-<link rel="stylesheet" href="resources.css">
+<link rel="stylesheet" href="resources.css?v=sy2">
 </head>
 <body>
 <header class="bar">
@@ -575,6 +575,11 @@ footer .wrap{width:100%}
               <span class="tx"><b>Prompting guide</b><small>The right prompt for any task, in 14 techniques</small></span>
               <span class="n">04</span>
             </button>
+            <button type="button" class="tr-tool" data-tool="sahyadri" aria-current="false" style="--c:var(--sy);--cs:var(--sy-soft)">
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/><path d="M14 7l3-3 3 3"/></svg></span>
+              <span class="tx"><b>AI adoption lab</b><small>Value, launch and monitor AI in Excel</small></span>
+              <span class="n">05</span>
+            </button>
             <div class="tr-soon" aria-hidden="true"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><span class="tx"><b>More tools coming</b><small>New classroom tools will appear here</small></span></div>
           </nav>
         </div>
@@ -616,6 +621,17 @@ footer .wrap{width:100%}
             <a href="#resources/prompting" data-jump="pg-tech"><b>4</b>The 14 techniques</a>
             <a href="#resources/prompting" data-jump="pg-teach"><b>5</b>Teach a session</a>
             <a href="#resources/prompting" data-jump="pg-files"><b>6</b>Downloads</a>
+          </nav>
+        </div>
+        <div data-tool-aside="sahyadri" hidden>
+          <p class="tr-label">This resource</p>
+          <nav class="kit-jump" aria-label="Sections of this resource">
+            <a href="#resources/sahyadri" data-jump="sy-arc"><b>1</b>The case</a>
+            <a href="#resources/sahyadri" data-jump="sy-sessions"><b>2</b>What learners do</a>
+            <a href="#resources/sahyadri" data-jump="sy-try"><b>3</b>Value one task</a>
+            <a href="#resources/sahyadri" data-jump="sy-ai"><b>4</b>Working with AI</a>
+            <a href="#resources/sahyadri" data-jump="sy-teach"><b>5</b>Running the case</a>
+            <a href="#resources/sahyadri" data-jump="sy-pack"><b>6</b>Request the pack</a>
           </nav>
         </div>
       </aside>
@@ -1240,6 +1256,155 @@ Start by asking: &quot;What task would you like help with?&quot;
         </div>
         <p class="kit-credit">Contributor: Meenakshi Mangipudi, Masters student, Christ University. Developed with Prof. Abhishek Kumar Jha.</p>
       </article>
+      <article class="kit sy" id="tool-sahyadri" data-tool-panel="sahyadri" hidden>
+        <header class="kit-head">
+          <p class="eyebrow">Teaching resource 05</p>
+          <h2>AI adoption lab: the Sahyadri case</h2>
+          <p class="lede">A three-session case in which learners take AI from business case to live service at a fictional health insurer. They value and choose AI projects, plan the launch within a fixed budget and team, then monitor, test and update what is running. All the work happens in Excel workbooks, with an AI assistant as a helper whose work they check.</p>
+          <ul class="kit-chips">
+            <li>Three linked sessions</li>
+            <li>Excel workbooks</li>
+            <li>Cost and value modelling</li>
+            <li>Pilots, A/B tests and monitoring</li>
+            <li>No coding needed</li>
+            <li>Shared on request</li>
+          </ul>
+        </header>
+
+        <h3 class="ph" id="sy-arc" style="border-top:0;padding-top:0;margin-top:34px">The case in three sessions</h3>
+        <p style="margin-top:10px">Sahyadri Health Insurance handles about 900,000 claims a year and wants to use AI in claims operations. Each session picks up where the last one ended, so learners live with their own earlier choices.</p>
+        <figure class="dg" aria-label="Diagram: the three sessions of the case">
+          <p class="ttl">From business case to live service</p>
+          <div class="road">
+            <div class="nd"><b>Session 1 · Choose</b><span>Which AI projects are worth funding?</span><small>value 20 tasks, pick the first wave</small></div>
+            <div class="nd"><b>Session 2 · Go live</b><span>What must be true on launch day?</span><small>budget, team, data and monitoring</small></div>
+            <div class="nd ok"><b>Session 3 · Run it</b><span>Is it still working?</span><small>alerts, A/B tests, model retirement</small></div>
+          </div>
+        </figure>
+        <p class="sy-note">Built for weeks 11 to 13 of my Generative AI for Business course with Great Learning. Each session takes about three hours: 90 minutes of teaching, then 90 minutes on the workbook.</p>
+
+        <h3 class="ph p2" id="sy-sessions"><span class="tag">Sessions</span>What learners do</h3>
+        <p class="ph-sub">Learners play a different role in each session, and each session ends with a decision they have to defend with numbers.</p>
+        <div class="sy-sess">
+          <section class="sy-s" aria-labelledby="sy-s1">
+            <p class="sy-n">Session 1</p>
+            <h4 id="sy-s1">Choose the first wave</h4>
+            <p class="sy-role">Learners are advisers to the COO</p>
+            <p>Twenty claims tasks compete for one wave of AI projects. Four limits apply: budget, team capacity, tasks that need others first, and shared platforms. Learners give every task one decision: <b>automate</b>, <b>assist</b>, <b>defer</b> or <b>leave as is</b>.</p>
+            <p class="sy-hard"><b>What makes it hard</b> Vendors exaggerate, pilots are partial, and the workbook never says what a task is worth. Building that value is the job.</p>
+            <p class="cs-line"><b>Concepts</b><span>Three-year value model</span><span>Discounting vendor claims</span><span>Adoption ramp</span><span>Cost per item</span><span>Shared platform costs</span></p>
+            <p class="sy-out"><b>Hand in</b> A two-page memo to the COO, the workbook, and a one-page note on assumptions and AI use, naming one place where the AI was wrong.</p>
+          </section>
+          <section class="sy-s" aria-labelledby="sy-s2">
+            <p class="sy-n">Session 2</p>
+            <h4 id="sy-s2">Take it live</h4>
+            <p class="sy-role">Learners are the AI steering committee</p>
+            <p>Four approved tasks, Rs 520 lakh and 12 people, for a plan that needs 16. Learners choose a team structure, which tasks to launch, how much data clean-up to buy, whether to pay for monitoring, and who works on what.</p>
+            <p class="sy-hard"><b>The twist</b> Decisions are locked. Then four events hit: mislabelled data, a key engineer resigns, a vendor service drifts and raises its price, and a regulator asks questions. Learners decide to continue or stop each task on the value still ahead.</p>
+            <p class="cs-line"><b>Concepts</b><span>Pilot to production</span><span>Data readiness</span><span>Operating models</span><span>The weakest role sets coverage</span><span>Sunk cost</span></p>
+            <p class="sy-out"><b>Hand in</b> The locked plan, the final value, and a paragraph on which decision protected or lost the most.</p>
+          </section>
+          <section class="sy-s" aria-labelledby="sy-s3">
+            <p class="sy-n">Session 3</p>
+            <h4 id="sy-s3">Keep it working</h4>
+            <p class="sy-role">Learners are the monitoring analysts</p>
+            <p>Three tasks are live, with 16 weeks of data. Learners commit a launch checklist with six points of effort and set an alert rule for each task: which signal to watch, how strict to be, and how many weeks in a row before acting.</p>
+            <p class="sy-hard"><b>The twist</b> Ten more weeks arrive with what really changed. Rules are scored on late alerts and false alarms. Learners then read three A/B tests of a new version, and plan the move off a vendor model that is being retired.</p>
+            <p class="cs-line"><b>Concepts</b><span>Leading and lagging signals</span><span>False alarm or late alert</span><span>A/B lift and its range</span><span>Model retirement</span></p>
+            <p class="sy-out"><b>Hand in</b> The workbook, a decision on the new version, a migration plan and a short memo.</p>
+          </section>
+        </div>
+
+        <h3 class="ph p3" id="sy-try"><span class="tag">Try it</span>Value one AI task</h3>
+        <p class="ph-sub">This is the kind of row learners build in Session 1. The example is task T04, drafting follow-ups for missing documents. Change any number and the year-one result updates.</p>
+        <div class="sy-calc" id="sy-calc">
+          <div class="sy-in">
+            <fieldset><legend>The AI's effect</legend>
+              <label>Vendor claim: drafts sent unedited <span><input type="number" data-k="claim" value="50" min="0" max="100" step="1">%</span></label>
+              <label>Your discount on the claim <span><input type="number" data-k="disc" value="20" min="0" max="100" step="1">%</span></label>
+              <label>Minutes per item today <span><input type="number" data-k="mins" value="7" min="0" step="0.5"></span></label>
+            </fieldset>
+            <fieldset><legend>Volume and adoption</legend>
+              <label>Items per year today <span><input type="number" data-k="items" value="340000" min="0" step="10000"></span></label>
+              <label>Growth in year 1 <span><input type="number" data-k="grow" value="8" min="-50" max="100" step="1">%</span></label>
+              <label>Adoption in year 1 <span><input type="number" data-k="adopt" value="50" min="0" max="100" step="5">%</span></label>
+            </fieldset>
+            <fieldset><legend>Money</legend>
+              <label>Labour cost per hour (Rs) <span><input type="number" data-k="wage" value="350" min="0" step="10"></span></label>
+              <label>Saved time that becomes cash <span><input type="number" data-k="real" value="70" min="0" max="100" step="5">%</span></label>
+              <label>Error rate today <span><input type="number" data-k="err0" value="5.0" min="0" max="100" step="0.1">%</span></label>
+              <label>Error rate with AI <span><input type="number" data-k="err1" value="3.4" min="0" max="100" step="0.1">%</span></label>
+              <label>Cost per error (Rs) <span><input type="number" data-k="cpe" value="150" min="0" step="10"></span></label>
+              <label>Error saving that is real <span><input type="number" data-k="ereal" value="60" min="0" max="100" step="5">%</span></label>
+            </fieldset>
+            <fieldset><legend>Costs (Rs lakh)</legend>
+              <label>AI usage in year 1 <span><input type="number" data-k="tok" value="0.08" min="0" step="0.01"></span></label>
+              <label>Run cost in year 1 <span><input type="number" data-k="run" value="6" min="0" step="0.5"></span></label>
+              <label>One-time spend <span><input type="number" data-k="once" value="39" min="0" step="1"></span></label>
+            </fieldset>
+          </div>
+          <div class="sy-out-box" aria-live="polite">
+            <table class="sy-tbl">
+              <thead><tr><th scope="col">Step</th><th scope="col">Calculation</th><th scope="col">Result</th></tr></thead>
+              <tbody id="sy-rows"></tbody>
+            </table>
+            <div class="sy-net"><span>Net benefit, year 1</span><b id="sy-net">Rs 0 lakh</b></div>
+            <p class="sy-pay" id="sy-pay"></p>
+            <button type="button" class="sy-reset" id="sy-reset">Reset to the case values</button>
+          </div>
+        </div>
+        <p class="sy-note">One possible method, not the answer. All figures are invented for teaching. 1 lakh is 100,000 rupees.</p>
+
+        <h3 class="ph" id="sy-ai"><span class="tag">AI as helper</span>Working with an AI assistant</h3>
+        <p class="ph-sub">Learners use an AI assistant such as Claude at every step, but never ask it for the answer. They ask it to help build the method, then check its work.</p>
+        <figure class="dg" aria-label="Diagram: the working loop">
+          <p class="ttl">The working loop</p>
+          <div class="chain sy-chain">
+            <div class="nd"><b>1</b>Ask<small>one small step at a time</small></div>
+            <div class="nd"><b>2</b>Draft<small>the AI builds formulas, not pasted numbers</small></div>
+            <div class="nd"><b>3</b>Check<small>redo one row by hand</small></div>
+            <div class="nd"><b>4</b>Improve<small>ask for hidden assumptions</small></div>
+          </div>
+        </figure>
+        <div class="sy-prompts">
+          <div class="say-block"><span class="lbl">Judge the evidence</span><pre>For each task, compare the vendor claim with the pilot result. Where there is no pilot, suggest a rule for discounting the claim and explain your reasoning. Do not decide for me.</pre><button type="button" class="copy-btn">Copy</button></div>
+          <div class="say-block"><span class="lbl">Build one task</span><pre>Build a three-year value model for task T04 on a new sheet. List every formula and every assumption. I will check it by hand.</pre><button type="button" class="copy-btn">Copy</button></div>
+          <div class="say-block"><span class="lbl">Challenge it</span><pre>Review my model. List every assumption I made without stating it, and every place a benefit could be counted twice.</pre><button type="button" class="copy-btn">Copy</button></div>
+        </div>
+        <div class="sim-grid sy-traps">
+          <div class="sim-card"><b>Confident but wrong</b><p>A neat table is not a correct table. Recompute one row yourself.</p></div>
+          <div class="sim-card"><b>Pasted numbers</b><p>Ask for formulas. Pasted values do not update when an assumption changes.</p></div>
+          <div class="sim-card"><b>Silent assumptions</b><p>Ask the AI to list every assumption, then keep, change or reject each one.</p></div>
+          <div class="sim-card"><b>Agreeing with you</b><p>The AI may praise weak reasoning. Ask it to argue the opposite case.</p></div>
+        </div>
+
+        <h3 class="ph p2" id="sy-teach"><span class="tag">Teach it</span>Running the case</h3>
+        <div class="sim-grid three">
+          <div class="sim-card"><b>Teach, then play</b><p>Each session opens with 90 minutes of concepts, from pilot failure rates to monitoring signals, followed by 90 minutes on the workbook in teams.</p></div>
+          <div class="sim-card"><b>Lock, then reveal</b><p>Sessions 2 and 3 come in two parts. Teams submit and lock their choices, then receive events they could not see. Nobody gets to improve the plan afterwards.</p></div>
+          <div class="sim-card"><b>Defend with evidence</b><p>Every hand-in asks what the team assumed, what would change its mind, and where the AI helped or misled.</p></div>
+        </div>
+        <p class="sy-note">Run all three sessions in order, or Session 1 on its own as a standalone case on valuing AI projects. Sessions 2 and 3 start from the Session 1 result, which the pack supplies.</p>
+
+        <h3 class="ph p3" id="sy-pack"><span class="tag">Request</span>What the pack contains</h3>
+        <p class="ph-sub">The materials are not published online. Write to me with your course and dates and I will send the pack.</p>
+        <div class="sy-pack">
+          <div class="sim-card"><b>Session 1</b><p>Student guide, student workbook, a plain-language glossary of money and AI terms, and teaching-slide content.</p><p class="sy-inst">For instructors: a worked workbook and an answer sheet.</p></div>
+          <div class="sim-card"><b>Session 2</b><p>Part 1 and Part 2 instructions and workbooks, a go-live simulator, and teaching-slide content.</p><p class="sy-inst">For instructors: the simulator with model answers.</p></div>
+          <div class="sim-card"><b>Session 3</b><p>Part 1 and Part 2 instructions and workbooks, with live data, A/B tests and a retirement plan.</p><p class="sy-inst">For instructors: a workbook with the hidden changes and scoring.</p></div>
+        </div>
+        <div class="kit-actions">
+          <a class="kit-btn" href="mailto:abhishek.jha@spjimr.org?subject=Request%3A%20Sahyadri%20AI%20adoption%20case&amp;body=Hello%20Abhishek%2C%0A%0AI%27d%20like%20to%20use%20the%20Sahyadri%20AI%20adoption%20case.%0A%0ASessions%20I%20plan%20to%20run%20(1%2C%202%2C%203)%3A%0ACourse%20and%20audience%3A%0ATerm%20and%20dates%3A%0AInstitution%3A%0A">Request the pack</a>
+          <a class="kit-btn ghost" href="#contact">Other ways to reach me</a>
+        </div>
+
+        <div class="faq">
+          <details><summary>Is Sahyadri a real company?</summary><p>No. The insurer, its tasks and every number are invented for teaching. Do not quote them as facts about any real insurer or vendor.</p></details>
+          <details><summary>Do learners need to code?</summary><p>No. Everything happens in Excel. Cells learners may change are marked, and the workbooks check budget, capacity and other rules as they go.</p></details>
+          <details><summary>Which AI assistant should learners use?</summary><p>Any capable chat assistant that can read a spreadsheet. The guide is written around Claude, and the prompts work with others too. Learners stay accountable for every number.</p></details>
+          <details><summary>Who can request it?</summary><p>Faculty, programme directors and learning leads. Instructor files go to instructors only.</p></details>
+        </div>
+      </article>
 
 
     </div>
@@ -1336,6 +1501,6 @@ Start by asking: &quot;What task would you like help with?&quot;
 </script>
 <script src="walker.js?v=mk4" defer></script>
 <script src="extras.js" defer></script>
-<script src="resources.js" defer></script>
+<script src="resources.js?v=sy1" defer></script>
 </body>
 </html>
