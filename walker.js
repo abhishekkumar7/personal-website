@@ -3,7 +3,8 @@
    - the dock actor, who walks along the bottom of the screen on every page and changes outfit
      with the page (or the home-page section) in view.
    Click either one: he laughs, then hurries away. Hover him in teacher or board outfit: an email board drops down.
-   Dialogue is shown as text in speech bubbles; there is no sound. */
+   Dialogue is shown as text in speech bubbles; there is no sound.
+   On the Prompting guide only (#resources/prompting), Abhishek steps aside and Meenakshi, the guide's contributor, walks the page instead. */
 (function () {
   'use strict';
   var EMAIL = 'abhishek.jha@spjimr.org';
@@ -90,8 +91,8 @@
     el.setAttribute('data-costume', 'casual');
     el.setAttribute('role', 'button');
     el.setAttribute('tabindex', '0');
-    el.setAttribute('aria-label', 'Animated Abhishek. Click him and he laughs.');
-    el.innerHTML = '<div class="av-flip">' + SVG + '</div><div class="av-poof"></div>';
+    el.setAttribute('aria-label', opts.label || 'Animated Abhishek. Click him and he laughs.');
+    el.innerHTML = '<div class="av-flip">' + (opts.svg || SVG) + '</div><div class="av-poof"></div>';
     parent.appendChild(el);
     this.el = el;
     this.flip = el.querySelector('.av-flip');
@@ -205,7 +206,8 @@
   };
 
   /* Click: laugh, then hurry off to the far side. Hover (teacher/board): email board. */
-  function makeInteractive(actor, range, after) {
+  function makeInteractive(actor, range, after, lines) {
+    lines = lines || { laugh: 'Ha ha ha! That tickles!', away: 'Okay, okay, I\u2019m going!', speed: 300, run: true };
     var el = actor.el, busy = false, leaveTimer;
     function react() {
       if (busy) return;
@@ -214,12 +216,12 @@
       if (actor === hero) { introToken++; setPlayLabel(false); }
       actor.stopWalking();
       el.classList.add('laughing');
-      actor.say('Ha ha ha! That tickles!', 'laugh', { hold: 0 }).then(function () {
+      actor.say(lines.laugh, 'laugh', { hold: 0 }).then(function () {
         el.classList.remove('laughing');
         var r = range(), mid = (r[0] + r[1]) / 2;
         var target = actor.x > mid ? r[0] : r[1];
-        actor.showBubble('Okay, okay, I’m going!');
-        return actor.walkTo(target, 300, true);
+        actor.showBubble(lines.away);
+        return actor.walkTo(target, lines.speed, lines.run);
       }).then(function () {
         return sleep(700);
       }).then(function () {
@@ -297,7 +299,8 @@
   var dockCtl = makeInteractive(walker, dockRange, null);
   var view = 'home', heroVisible = true, hidden = false, lastSection = null;
 
-  function dockAway() { return hidden || (view === 'home' && heroVisible); }
+  function onPrompting() { return /^#resources\/prompting/.test(location.hash || ''); }
+  function dockAway() { return hidden || (view === 'home' && heroVisible) || onPrompting(); }
   function updateDock() { dock.classList.toggle('away', dockAway()); }
 
   // Wander: pick a spot, walk there, pause, repeat. Pauses while talking, busy or away.
@@ -330,7 +333,7 @@
     walker.setX(r[1]);
     walker.setCostume(cfg.costume, true);
     if (cfg.wave && !reduce) { walker.el.classList.add('waving'); setTimeout(function () { walker.el.classList.remove('waving'); }, 1600); }
-    if (cfg.line) setTimeout(function () { walker.say(cfg.line[1], cfg.line[0], { hold: 1800 }); }, 450);
+    if (cfg.line && !onPrompting()) setTimeout(function () { if (!onPrompting()) walker.say(cfg.line[1], cfg.line[0], { hold: 1800 }); }, 450);
   }
   document.addEventListener('viewchange', function (e) { onView(e.detail); });
 
@@ -371,14 +374,129 @@
     if (stage) stage.classList.toggle('no-actor', hidden);
     if (hero) hero.el.style.display = hidden ? 'none' : '';
     if (hidden) { walker.hush(); if (hero) hero.hush(); }
+    mkDock.classList.toggle('off', hidden);
     updateDock();
+    if (typeof updateMk === 'function') updateMk();
   });
   window.addEventListener('resize', function () {
     var r = dockRange();
     if (walker.x > r[1]) walker.setX(r[1]);
   });
 
+  /* ---------- Meenakshi: walks only on the Prompting guide (#resources/prompting) ---------- */
+  var MK_SVG =
+    '<svg class="av-svg" viewBox="0 0 200 360" aria-hidden="true">' +
+    '<ellipse cx="100" cy="352" rx="44" ry="7" fill="rgba(40,20,10,.22)"/>' +
+    '<g class="bob">' +
+      '<g class="leg leg-l"><rect x="77" y="244" width="20" height="94" rx="9" fill="#1b1b22"/><path d="M72 336h26v10H66v-3a7 7 0 0 1 6-7z" fill="#0f0f12"/></g>' +
+      '<g class="leg leg-r"><rect x="103" y="244" width="20" height="94" rx="9" fill="#1b1b22"/><path d="M102 336h26a7 7 0 0 1 6 7v3h-32z" fill="#0f0f12"/></g>' +
+      '<g class="arm arm-l"><path class="sleeve" d="M64 166c-9 6-13 18-14 34l-4 42" stroke-width="18" stroke-linecap="round" fill="none"/><circle class="skin" cx="46" cy="246" r="9"/></g>' +
+      '<path d="M64 158c10-8 22-12 36-12s26 4 36 12c6 6 6 20 4 40l-3 30c-2 14-4 30-6 42H70c-2-12-4-28-6-42l-3-30c-2-20-2-34 3-40z" fill="#ec5a46"/>' +
+      '<path d="M86 150h28l-7 72h-14z" fill="#16161b"/>' +
+      '<path d="M86 149l13 58-15-28-6-21z" fill="#d6463a"/><path d="M114 149l-13 58 15-28 6-21z" fill="#d6463a"/>' +
+      '<path d="M100 160l-13-8v16zM100 160l13-8v16z" fill="#0d0d10"/><circle cx="100" cy="160" r="3.6" fill="#2a2a31"/>' +
+      '<path d="M98 163l-5 17M102 163l5 17" stroke="#0d0d10" stroke-width="3" stroke-linecap="round"/>' +
+      '<circle cx="100" cy="234" r="2.8" fill="#16161b"/>' +
+      '<g class="arm arm-r"><path class="sleeve" d="M136 166c9 6 13 18 14 34l4 42" stroke-width="18" stroke-linecap="round" fill="none"/>' +
+        '<rect x="138" y="224" width="32" height="42" rx="5" fill="#2a2d3a"/><rect x="143" y="230" width="22" height="3.5" rx="1.7" fill="#f0b24a"/><rect x="143" y="237" width="17" height="3.5" rx="1.7" fill="#a9b4ff"/><rect x="143" y="244" width="20" height="3.5" rx="1.7" fill="#a9b4ff"/>' +
+        '<circle class="skin" cx="154" cy="250" r="8.5"/></g>' +
+      '<g class="head">' +
+        '<ellipse cx="100" cy="92" rx="49" ry="52" fill="#141010"/>' +
+        '<rect class="skin-d" x="91" y="130" width="18" height="22"/>' +
+        '<circle class="skin" cx="56" cy="101" r="8"/><circle class="skin" cx="144" cy="101" r="8"/>' +
+        '<circle cx="56" cy="111" r="2.8" fill="#f0b24a"/><circle cx="144" cy="111" r="2.8" fill="#f0b24a"/>' +
+        '<ellipse class="skin" cx="100" cy="98" rx="43" ry="50"/>' +
+        '<path d="M56 94C53 58 74 40 100 40s47 18 44 54c-4-17-14-30-30-34-6-1-11 1-14 6-3-5-8-7-14-6-16 4-26 17-30 34z" fill="#141010"/>' +
+        '<circle cx="76" cy="114" r="7" fill="#e0614f" opacity=".16"/><circle cx="124" cy="114" r="7" fill="#e0614f" opacity=".16"/>' +
+        '<path d="M73 85q9-5 18-2M109 83q9-3 18 2" stroke="#1b1410" stroke-width="3.6" stroke-linecap="round" fill="none"/>' +
+        '<g class="eyes"><ellipse cx="82" cy="98" rx="5" ry="6.2" fill="#1a120e"/><ellipse cx="118" cy="98" rx="5" ry="6.2" fill="#1a120e"/><circle cx="84" cy="96" r="1.6" fill="#fff"/><circle cx="120" cy="96" r="1.6" fill="#fff"/>' +
+          '<path d="M76 93l-3-2M124 93l3-2" stroke="#1a120e" stroke-width="2" stroke-linecap="round"/></g>' +
+        '<path class="eyes-laugh" d="M76 99q6-8 12 0M112 99q6-8 12 0" stroke="#1a120e" stroke-width="3" stroke-linecap="round" fill="none"/>' +
+        '<path d="M100 103q-3 8 0 10 3 1 5-1" stroke="#94603f" stroke-width="2.4" stroke-linecap="round" fill="none"/>' +
+        '<g class="m-smile"><path d="M85 121q15 17 30 0z" fill="#6b2a26"/><path d="M87 122h26q-2 4-13 5-11-1-13-5z" fill="#fff"/></g>' +
+        '<ellipse class="m-open" cx="100" cy="125" rx="8" ry="6" fill="#6b2a26"/>' +
+        '<path class="m-laugh" d="M83 119q17 26 34 0z" fill="#6b2a26"/>' +
+      '</g>' +
+    '</g></svg>';
+
+  var MK_INTRO = [
+    "Hi, I'm Meenakshi. I built this prompting guide.",
+    'Describe a task in plain words, and the Prompt Coach picks the right technique.',
+    'Copy the coach below to start. No coding needed.'
+  ];
+  var MK_TIPS = {
+    'pg-ways': 'Use it in any chatbot, save it as your own assistant, or open the notebook.',
+    'pg-jobs': 'Find your job and copy a task to try it.',
+    'pg-tech': 'Fourteen techniques in four families. Open one for a template.',
+    'pg-teach': 'Teaching this? The facilitator guide has a 75-minute plan.',
+    'pg-files': 'Everything is in one zip. Happy prompting!'
+  };
+  var mkDock = document.createElement('div');
+  mkDock.className = 'av-dock mk-dock away';
+  document.body.appendChild(mkDock);
+  var mk = new Actor(mkDock, { mode: 'dock', svg: MK_SVG, label: 'Animated Meenakshi. Click her and she laughs.' });
+  mk.el.classList.add('mk');
+  mk.el.setAttribute('data-costume', 'formal');
+  function mkRange() {
+    var vw = document.documentElement.clientWidth, w = mk.width();
+    var lo = Math.max(16, Math.min(150, vw * 0.3));
+    return [lo, Math.max(lo, vw - w - 16)];
+  }
+  mk.setX(mkRange()[1]);
+  var mkCtl = makeInteractive(mk, mkRange, null, { laugh: 'Haha, you found me!', away: 'Back to prompting!', speed: 170, run: false });
+  var mkOn = false, mkToken = 0, mkTip = null;
+  function mkAway() { return hidden || !onPrompting(); }
+  function mkEnter() {
+    var token = ++mkToken;
+    mk.stopWalking(); mk.hush();
+    var r = mkRange();
+    mk.setX(r[1]);
+    var chain = sleep(500);
+    MK_INTRO.forEach(function (line) {
+      chain = chain.then(function () {
+        if (token !== mkToken || mkAway() || mkCtl.busy()) return;
+        return mk.say(line, null, { hold: 300, keep: true });
+      });
+    });
+    chain.then(function () { if (token === mkToken) setTimeout(function () { if (token === mkToken) mk.hideBubble(); }, 2200); });
+  }
+  function updateMk() {
+    var away = mkAway();
+    mkDock.classList.toggle('away', away);
+    var on = !away;
+    if (on && !mkOn) { mkTip = null; mkEnter(); }
+    if (!on && mkOn) { mkToken++; mk.hush(); mk.stopWalking(); }
+    mkOn = on;
+    hideBtn.textContent = (hidden ? 'Bring ' : 'Hide ') + (onPrompting() ? 'Meenakshi' : 'Abhishek') + (hidden ? ' back' : '');
+  }
+  (function mkWander() {
+    var pause = 2600 + Math.random() * 3400;
+    if (!reduce && mkOn && !mkCtl.busy() && !mk.el.classList.contains('talking') && !mk.bubble && !mk.el.matches(':hover')) {
+      var r = mkRange(), target = r[0] + Math.random() * (r[1] - r[0]);
+      mk.walkTo(target, 60).then(function () { setTimeout(mkWander, pause); });
+    } else setTimeout(mkWander, 1200);
+  })();
+  // Tip for whichever section of the guide is on screen (the last heading above 60% of the viewport).
+  var mkIds = Object.keys(MK_TIPS), mkScrollQueued = false;
+  function mkSectionTip() {
+    mkScrollQueued = false;
+    if (!mkOn || mkCtl.busy()) return;
+    var cur = null, limit = window.innerHeight * 0.6;
+    mkIds.forEach(function (id) { var el = document.getElementById(id); if (el && el.getBoundingClientRect().top < limit) cur = id; });
+    if (!cur || cur === mkTip) return;
+    mkTip = cur;
+    mkToken++;
+    mk.say(MK_TIPS[cur], null, { hold: 1800 });
+  }
+  window.addEventListener('scroll', function () {
+    if (!mkScrollQueued) { mkScrollQueued = true; setTimeout(mkSectionTip, 250); }
+  }, { passive: true });
+  setInterval(function () { if (mkOn && !mkScrollQueued) mkSectionTip(); }, 700);
+  window.addEventListener('hashchange', function () { if (onPrompting()) walker.hush(); updateDock(); updateMk(); });
+  window.addEventListener('resize', function () { var r = mkRange(); if (mk.x > r[1]) mk.setX(r[1]); });
+
   // Start on whatever page the visitor landed on.
   var firstView = (location.hash || '#home').slice(1).split('/')[0];
   onView(firstView in VIEW ? firstView : 'home');
+  updateMk();
 })();

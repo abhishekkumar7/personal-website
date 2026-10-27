@@ -101,3 +101,7 @@
   .av *{animation:none!important}
   .av.poof .av-flip,.av-bubble,.av-board{animation:none}
 }
+
+/* Meenakshi (Prompting guide only): her own skin tone and coral blazer sleeves */
+.av.mk{--skin:#b27b56;--skin-d:#94603f;--sleeve:#ec5a46}
+.av-dock.mk-dock.away .av{opacity:0;translate:0 40px;pointer-events:none}
