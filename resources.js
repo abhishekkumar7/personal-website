@@ -11,7 +11,7 @@
   function set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } }
 
   /* ---------- which tool is open: #resources/<tool> ---------- */
-  var TOOLS = ['app-dev', 'multi-agent', 'cases'];
+  var TOOLS = ['app-dev', 'multi-agent', 'cases', 'prompting'];
   var tabs = root.querySelectorAll('.tr-tool');
   var panels = root.querySelectorAll('[data-tool-panel]');
   var asides = root.querySelectorAll('[data-tool-aside]');
@@ -164,6 +164,25 @@
   [elType, elWhat, elKeep, elTest].forEach(function (el) { el.addEventListener('input', build); el.addEventListener('change', build); });
   document.getElementById('pb-example').addEventListener('click', function () { elWhat.value = TYPES[elType.value].ex; build(); });
   build();
+
+  /* ---------- Prompting guide: copy buttons (the coach, templates and job tasks) ---------- */
+  var pg = document.getElementById('tool-prompting');
+  if (pg) pg.addEventListener('click', function (e) {
+    var btn = e.target.closest('.copy-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var pre = btn.parentNode.querySelector('pre');
+    var text = btn.getAttribute('data-copy') || (pre ? pre.textContent : '');
+    var label = btn.textContent;
+    copyText(text.trim()).then(function () {
+      btn.textContent = 'Copied';
+      setTimeout(function () { btn.textContent = label; }, 1300);
+    }, function () {
+      btn.textContent = 'Press Ctrl+C';
+      if (pre) { var r = document.createRange(); r.selectNodeContents(pre); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+      setTimeout(function () { btn.textContent = label; }, 2200);
+    });
+  });
 
   /* ---------- AI case studies: theme filter and a combined request ---------- */
   var csCards = Array.prototype.slice.call(root.querySelectorAll('.cs-card'));

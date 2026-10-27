@@ -14,7 +14,7 @@
 :root{
   --paper:#ffffff; --band:#f2f4f9; --sheet:#ffffff; --ink:#151b33; --muted:#59627a; --line:#dfe3ec;
   --navy:#0b1028; --navy-2:#151c44; --on-navy:#eef1fb; --on-navy-muted:#b4bce0;
-  --accent:#3446d8; --accent-soft:#e7eafc; --warm:#c47f12; --warm-soft:#fcf1dd; --res:#0d7a6a; --res-soft:#dcf2ee;
+  --accent:#3446d8; --accent-soft:#e7eafc; --warm:#c47f12; --warm-soft:#fcf1dd; --res:#0d7a6a; --res-soft:#dcf2ee; --pg:#9b2f6f; --pg-soft:#f8e6f0;
   --sans:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
   --serif:"Literata",Georgia,"Times New Roman",serif;
   --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
@@ -23,13 +23,13 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#0e1224; --band:#131834; --sheet:#171d38; --ink:#e9ecf6; --muted:#a2aac2; --line:#28304f;
-    --accent:#93a0ff; --accent-soft:#1f2650; --warm:#f0b24a; --warm-soft:#2d2513; --res:#55cbb6; --res-soft:#12312c;
+    --accent:#93a0ff; --accent-soft:#1f2650; --warm:#f0b24a; --warm-soft:#2d2513; --res:#55cbb6; --res-soft:#12312c; --pg:#f08cc3; --pg-soft:#3a1730;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --paper:#0e1224; --band:#131834; --sheet:#171d38; --ink:#e9ecf6; --muted:#a2aac2; --line:#28304f;
-  --accent:#93a0ff; --accent-soft:#1f2650; --warm:#f0b24a; --warm-soft:#2d2513; --res:#55cbb6; --res-soft:#12312c;
+  --accent:#93a0ff; --accent-soft:#1f2650; --warm:#f0b24a; --warm-soft:#2d2513; --res:#55cbb6; --res-soft:#12312c; --pg:#f08cc3; --pg-soft:#3a1730;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -570,6 +570,11 @@ footer .wrap{width:100%}
               <span class="tx"><b>AI case studies</b><small>Six decision cases with teaching notes</small></span>
               <span class="n">03</span>
             </button>
+            <button type="button" class="tr-tool" data-tool="prompting" aria-current="false" style="--c:var(--pg);--cs:var(--pg-soft)">
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M12 8.2l.9 1.9 1.9.9-1.9.9-.9 1.9-.9-1.9-1.9-.9 1.9-.9z"/></svg></span>
+              <span class="tx"><b>Prompting guide</b><small>The right prompt for any task, in 14 techniques</small></span>
+              <span class="n">04</span>
+            </button>
             <div class="tr-soon" aria-hidden="true"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><span class="tx"><b>More tools coming</b><small>New classroom tools will appear here</small></span></div>
           </nav>
         </div>
@@ -600,6 +605,17 @@ footer .wrap{width:100%}
             <a href="#resources/cases" data-jump="cs-how"><b>1</b>How to get a case</a>
             <a href="#resources/cases" data-jump="cs-list"><b>2</b>The six cases</a>
             <a href="#resources/cases" data-jump="cs-request"><b>3</b>Request one</a>
+          </nav>
+        </div>
+        <div data-tool-aside="prompting" hidden>
+          <p class="tr-label">This resource</p>
+          <nav class="kit-jump" aria-label="Sections of this resource">
+            <a href="#resources/prompting" data-jump="pg-start"><b>1</b>Start in two minutes</a>
+            <a href="#resources/prompting" data-jump="pg-ways"><b>2</b>Three ways to use it</a>
+            <a href="#resources/prompting" data-jump="pg-jobs"><b>3</b>Use it in your job</a>
+            <a href="#resources/prompting" data-jump="pg-tech"><b>4</b>The 14 techniques</a>
+            <a href="#resources/prompting" data-jump="pg-teach"><b>5</b>Teach a session</a>
+            <a href="#resources/prompting" data-jump="pg-files"><b>6</b>Downloads</a>
           </nav>
         </div>
       </aside>
@@ -1102,6 +1118,127 @@ git commit -m "v1 works"</pre><button type="button" class="copy-btn">Copy</butto
           <details><summary>Who can request a case?</summary><p>Faculty, programme directors and learning leads. Tell me your course, audience and dates, and I will reply with next steps.</p></details>
           <details><summary>Are these real companies?</summary><p>The cases are built around real organisations and real developments, and are written for class discussion. Some companies, figures and internal deliberations are constructed for teaching and are not company records.</p></details>
         </div>
+      </article>
+
+      <article class="kit pg" id="tool-prompting" data-tool-panel="prompting" hidden>
+        <header class="kit-head">
+          <p class="eyebrow">Teaching resource 04</p>
+          <div class="pg-credit">
+            <span class="pg-av" aria-hidden="true">MM</span>
+            <p><small>Contributor</small><a href="https://www.linkedin.com/in/meenakshimangipudi/" rel="noopener">Meenakshi Mangipudi <span aria-hidden="true">&#8599;</span></a><span>Masters student, Christ University</span></p>
+            <p class="pg-with">Developed with Prof. Abhishek Kumar Jha</p>
+          </div>
+          <h2>Prompting guide: the right prompt for any task</h2>
+          <p class="lede">Describe a task in plain words. The Prompt Coach tells you what kind of task it is, picks the 3 best of 14 prompting techniques, and rewrites your request as ready-to-paste prompts. Anyone can use it at work, and anyone teaching prompting can run a session with it.</p>
+          <ul class="kit-chips">
+            <li>14 techniques</li>
+            <li>No coding needed</li>
+            <li>ChatGPT, Gemini, Claude or Copilot</li>
+            <li>A ready-to-run 75-minute session</li>
+          </ul>
+          <div class="kit-actions">
+            <a class="kit-btn" href="resources/prompting-guide/Prompting_Guide_Kit.zip" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download the full kit</a>
+            <a class="kit-btn ghost" href="#resources/prompting" data-jump="pg-start">Start in two minutes</a>
+          </div>
+        </header>
+
+        <h3 class="ph" id="pg-start"><span class="tag">Start here</span>Start in two minutes, no code</h3>
+        <p class="ph-sub">Copy the Prompt Coach below and paste it as the first message in any chatbot. Then describe your task the way you would to a colleague.</p>
+        <figure class="dg" aria-label="Diagram: how to use the Prompt Coach">
+          <p class="ttl">Four steps</p>
+          <div class="road">
+            <div class="nd"><b>Step 1</b><span>Copy</span><small>the Prompt Coach</small></div>
+            <div class="nd"><b>Step 2</b><span>Paste</span><small>into any chatbot</small></div>
+            <div class="nd"><b>Step 3</b><span>Describe</span><small>your task in plain words</small></div>
+            <div class="nd ok"><b>Step 4</b><span>Use</span><small>the best of three prompts</small></div>
+          </div>
+        </figure>
+        <div class="say-block pg-coach"><span class="lbl">The Prompt Coach: paste this first</span><pre>You are my Prompt Coach. I will describe a task in plain words, the way I would say it to a colleague.
+
+For every task I give you:
+1. In 2 to 3 sentences, say what kind of task it is.
+2. Choose the 3 best prompting techniques for it from the list below. Rank them and give one sentence each on why it fits.
+3. If something important is missing (audience, purpose, length, format or data), ask me up to 3 short questions first and wait for my answers. Skip this if I say &quot;no questions&quot;.
+4. Rewrite my task as a ready-to-paste prompt for each of the 3 techniques. Label them Type 1, Type 2 and Type 3, and mark Type 1 as the best choice.
+Keep the rewritten prompts free of explanations, so I can copy them straight into any AI tool.
+
+THE 14 TECHNIQUES AND WHEN TO USE THEM
+1. Zero-Shot Prompting: Straightforward, standard tasks where the expected output is clear: summarising, translating, factual Q&amp;A, classification, recommendations.
+2. Few-Shot Prompting: The task has a style, format or logic that is hard to describe in words. Show 2 to 5 examples first.
+3. Contrastive Prompting: Outputs keep drifting the wrong way. Show a good example and a bad one to make the target clear.
+4. Chain-of-Thought: Complex problems that need logic, maths or several reasoning steps.
+5. Step-by-Step Prompting: Procedures, instructions, workflows and how-to guides where order matters.
+6. Tree of Thought: Open-ended problems with several valid approaches. Explore branches, evaluate them, then converge.
+7. Self-Consistency: Accuracy is critical. Run several reasoning paths and compare where they agree.
+8. Structural Prompts: The format of the output matters: tables, JSON, a set document layout. Define the shape before the content.
+9. Persona Prompting: The perspective or expertise behind the answer matters. Assign a role or identity.
+10. Reverse Prompting: You want to learn from an example or copy a style: reconstruct the prompt that produced an output.
+11. AI Interview Technique: Complex deliverables that need context. Let the model ask questions before it produces anything.
+12. Thought Provocation: Challenge assumptions, stress-test an idea, find blind spots. Ask the model to argue against or critique.
+13. Meta-Prompting: You want to improve or generate prompts themselves. The model writes or refines the prompt.
+14. Iterative Refinement: High-stakes writing. Draft, critique, then revise in sequence.
+
+Start by asking: &quot;What task would you like help with?&quot;
+
+(Prompt Coach is based on the 14-technique prompting framework. Contributor: Meenakshi Mangipudi, Masters student, Christ University. Developed with Prof. Abhishek Kumar Jha, SPJIMR.)</pre><button type="button" class="copy-btn">Copy</button></div>
+        <p class="note safe"><b>Use it safely</b>Do not paste confidential, client or personal data into public chatbots. Check facts and numbers before you use an answer.</p>
+
+        <h3 class="ph p2" id="pg-ways"><span class="tag">Options</span>Three ways to use it</h3>
+        <p class="ph-sub">Start with the first. Move to the second when you use it every day, and to the third when you want to see the code.</p>
+        <div class="pg-ways">
+          <section class="pg-way">
+            <p class="pg-way-n">1</p>
+            <h4>In any chatbot</h4>
+            <p class="pg-for">For everyone · 2 minutes</p>
+            <ol><li>Open ChatGPT, Gemini, Claude or Copilot.</li><li>Paste the Prompt Coach as your first message.</li><li>Type your task. Copy the prompt marked best choice.</li></ol>
+            <a class="kit-btn ghost" href="resources/prompting-guide/Prompt_Coach_Instructions.txt" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Instructions (.txt)</a>
+          </section>
+          <section class="pg-way">
+            <p class="pg-way-n">2</p>
+            <h4>As your own assistant</h4>
+            <p class="pg-for">For daily use · 5 minutes, once</p>
+            <details><summary>Claude Skill</summary><p>Download the skill file. In Claude, open Settings, then Capabilities, then Skills, and upload the .zip. Claude then uses the coach whenever you ask for help with a prompt.</p></details>
+            <details><summary>ChatGPT: Custom GPT</summary><p>In ChatGPT, open GPTs and choose Create. Under Configure, paste the instructions file into Instructions and save. Creating GPTs needs a paid ChatGPT plan.</p></details>
+            <details><summary>Gemini: Gem</summary><p>In Gemini, open Gems and choose New Gem. Paste the instructions file into Instructions, name it Prompt Coach and save.</p></details>
+            <p class="pg-btns"><a class="kit-btn ghost" href="resources/prompting-guide/Prompt_Coach_Claude_Skill.zip" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Claude Skill (.zip)</a><a class="kit-btn ghost" href="resources/prompting-guide/Prompt_Coach_Instructions.txt" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Instructions (.txt)</a></p>
+            <p class="pg-fine">Menu names change from time to time; look for Skills, GPTs or Gems.</p>
+          </section>
+          <section class="pg-way">
+            <p class="pg-way-n">3</p>
+            <h4>Colab notebook</h4>
+            <p class="pg-for">For classes that want to see the code · 10 minutes</p>
+            <ol><li>Get a free Gemini API key at <a href="https://aistudio.google.com/apikey" rel="noopener">Google AI Studio</a>.</li><li>Open the notebook in Colab and choose Runtime, then Run all. Paste your key when asked.</li><li>Change the task in Step 4 and run it again. Step 6 downloads a PDF report.</li></ol>
+            <p class="pg-btns"><a class="kit-btn" href="https://colab.research.google.com/github/abhishekkumar7/personal-website/blob/main/resources/prompting-guide/Prompting_Guide.ipynb" rel="noopener">Open in Colab</a><a class="kit-btn ghost" href="resources/prompting-guide/Prompting_Guide.ipynb" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Notebook</a></p>
+            <p class="pg-fine">See what it produces: <a href="resources/prompting-guide/Sample_Output_Web_Series.pdf">a sample report (PDF)</a>.</p>
+          </section>
+        </div>
+
+        <h3 class="ph p3" id="pg-jobs"><span class="tag">At work</span>Use it in your job</h3>
+        <p class="ph-sub">A plain-words task from eight kinds of work, the techniques the coach typically picks, and one tip. Copy a task to try it, or swap in your own.</p>
+        <div class="pg-jobs"><div class="pg-job"><p class="pg-job-r">Marketing</p><p class="pg-job-q">&ldquo;Write three Instagram captions for our new running shoe.&rdquo;</p><p class="pg-job-p"><span>Few-Shot</span><span>Persona</span><span>Contrastive</span></p><p class="pg-job-tip">Paste two past captions in your brand voice so the model copies the style, not a generic one.</p><button type="button" class="pg-mini copy-btn" data-copy="Write three Instagram captions for our new running shoe.">Copy task</button></div><div class="pg-job"><p class="pg-job-r">Sales</p><p class="pg-job-q">&ldquo;Help me prepare for a first call with a hospital&#x27;s procurement head.&rdquo;</p><p class="pg-job-p"><span>AI Interview</span><span>Persona</span><span>Thought Provocation</span></p><p class="pg-job-tip">Let it ask about the account first, then have it play a sceptical buyer.</p><button type="button" class="pg-mini copy-btn" data-copy="Help me prepare for a first call with a hospital&#x27;s procurement head.">Copy task</button></div><div class="pg-job"><p class="pg-job-r">HR and hiring</p><p class="pg-job-q">&ldquo;Draft interview questions for a junior data analyst.&rdquo;</p><p class="pg-job-p"><span>Structural</span><span>Persona</span><span>Iterative Refinement</span></p><p class="pg-job-tip">Ask for a table: competency, question, what a good answer sounds like.</p><button type="button" class="pg-mini copy-btn" data-copy="Draft interview questions for a junior data analyst.">Copy task</button></div><div class="pg-job"><p class="pg-job-r">Finance</p><p class="pg-job-q">&ldquo;Explain why our gross margin fell this quarter, using these numbers.&rdquo;</p><p class="pg-job-p"><span>Chain-of-Thought</span><span>Structural</span><span>Self-Consistency</span></p><p class="pg-job-tip">Make it show the arithmetic, then check the answer two ways.</p><button type="button" class="pg-mini copy-btn" data-copy="Explain why our gross margin fell this quarter, using these numbers.">Copy task</button></div><div class="pg-job"><p class="pg-job-r">Operations</p><p class="pg-job-q">&ldquo;Write a process for handling customer returns in our stores.&rdquo;</p><p class="pg-job-p"><span>Step-by-Step</span><span>Structural</span><span>Iterative Refinement</span></p><p class="pg-job-tip">Numbered steps with an owner and a check at each step.</p><button type="button" class="pg-mini copy-btn" data-copy="Write a process for handling customer returns in our stores.">Copy task</button></div><div class="pg-job"><p class="pg-job-r">Strategy and consulting</p><p class="pg-job-q">&ldquo;Should we expand into Tier-2 cities next year?&rdquo;</p><p class="pg-job-p"><span>Tree of Thought</span><span>Thought Provocation</span><span>AI Interview</span></p><p class="pg-job-tip">Compare three entry options, then ask it to argue against the one you like.</p><button type="button" class="pg-mini copy-btn" data-copy="Should we expand into Tier-2 cities next year?">Copy task</button></div><div class="pg-job"><p class="pg-job-r">Teaching and training</p><p class="pg-job-q">&ldquo;Make a 10-question quiz on supply-chain basics.&rdquo;</p><p class="pg-job-p"><span>Structural</span><span>Few-Shot</span><span>Persona</span></p><p class="pg-job-tip">Show one good question so all ten match its level and format.</p><button type="button" class="pg-mini copy-btn" data-copy="Make a 10-question quiz on supply-chain basics.">Copy task</button></div><div class="pg-job"><p class="pg-job-r">Students and job seekers</p><p class="pg-job-q">&ldquo;Improve my CV for a product analyst role.&rdquo;</p><p class="pg-job-p"><span>AI Interview</span><span>Contrastive</span><span>Iterative Refinement</span></p><p class="pg-job-tip">Let it ask about your projects before it rewrites a single line.</p><button type="button" class="pg-mini copy-btn" data-copy="Improve my CV for a product analyst role.">Copy task</button></div></div>
+
+        <h3 class="ph" id="pg-tech"><span class="tag">Reference</span>The 14 techniques</h3>
+        <p class="ph-sub">Four families make them easier to remember. Open a technique to see when to use it and a template you can copy.</p>
+        <div class="pg-fams"><div class="pg-fam"><p class="pg-fam-t">Show, do not tell</p><details class="pg-tq"><summary><span class="k">01</span>Zero-Shot Prompting</summary><p>Straightforward, standard tasks where the expected output is clear: summarising, translating, factual Q&amp;A, classification, recommendations.</p><div class="pg-tpl"><code>[Task]. For [audience]. Answer in [format and length].</code><button type="button" class="copy-btn" data-copy="[Task]. For [audience]. Answer in [format and length].">Copy</button></div></details><details class="pg-tq"><summary><span class="k">02</span>Few-Shot Prompting</summary><p>The task has a style, format or logic that is hard to describe in words. Show 2 to 5 examples first.</p><div class="pg-tpl"><code>Here are examples of what I want: [example 1] [example 2]. Now do the same for: [new input].</code><button type="button" class="copy-btn" data-copy="Here are examples of what I want: [example 1] [example 2]. Now do the same for: [new input].">Copy</button></div></details><details class="pg-tq"><summary><span class="k">03</span>Contrastive Prompting</summary><p>Outputs keep drifting the wrong way. Show a good example and a bad one to make the target clear.</p><div class="pg-tpl"><code>Good example: [...]. Bad example: [...]. Write one like the good example and avoid what makes the bad one bad.</code><button type="button" class="copy-btn" data-copy="Good example: [...]. Bad example: [...]. Write one like the good example and avoid what makes the bad one bad.">Copy</button></div></details></div><div class="pg-fam"><p class="pg-fam-t">Make it reason</p><details class="pg-tq"><summary><span class="k">04</span>Chain-of-Thought</summary><p>Complex problems that need logic, maths or several reasoning steps.</p><div class="pg-tpl"><code>Think step by step and show your reasoning. Then give the final answer on its own line.</code><button type="button" class="copy-btn" data-copy="Think step by step and show your reasoning. Then give the final answer on its own line.">Copy</button></div></details><details class="pg-tq"><summary><span class="k">05</span>Step-by-Step Prompting</summary><p>Procedures, instructions, workflows and how-to guides where order matters.</p><div class="pg-tpl"><code>Give numbered steps in order, with what to check after each step.</code><button type="button" class="copy-btn" data-copy="Give numbered steps in order, with what to check after each step.">Copy</button></div></details><details class="pg-tq"><summary><span class="k">06</span>Tree of Thought</summary><p>Open-ended problems with several valid approaches. Explore branches, evaluate them, then converge.</p><div class="pg-tpl"><code>Propose 3 different approaches, list the pros and cons of each, then recommend one and say why.</code><button type="button" class="copy-btn" data-copy="Propose 3 different approaches, list the pros and cons of each, then recommend one and say why.">Copy</button></div></details><details class="pg-tq"><summary><span class="k">07</span>Self-Consistency</summary><p>Accuracy is critical. Run several reasoning paths and compare where they agree.</p><div class="pg-tpl"><code>Solve this three separate ways, compare the answers, and report where they agree and disagree.</code><button type="button" class="copy-btn" data-copy="Solve this three separate ways, compare the answers, and report where they agree and disagree.">Copy</button></div></details></div><div class="pg-fam"><p class="pg-fam-t">Shape the answer</p><details class="pg-tq"><summary><span class="k">08</span>Structural Prompts</summary><p>The format of the output matters: tables, JSON, a set document layout. Define the shape before the content.</p><div class="pg-tpl"><code>Answer as a table with the columns [A], [B] and [C]. Nothing outside the table.</code><button type="button" class="copy-btn" data-copy="Answer as a table with the columns [A], [B] and [C]. Nothing outside the table.">Copy</button></div></details><details class="pg-tq"><summary><span class="k">09</span>Persona Prompting</summary><p>The perspective or expertise behind the answer matters. Assign a role or identity.</p><div class="pg-tpl"><code>You are a [role] with [experience]. [Task] for [audience].</code><button type="button" class="copy-btn" data-copy="You are a [role] with [experience]. [Task] for [audience].">Copy</button></div></details><details class="pg-tq"><summary><span class="k">10</span>Reverse Prompting</summary><p>You want to learn from an example or copy a style: reconstruct the prompt that produced an output.</p><div class="pg-tpl"><code>Here is an output I like: [...]. Write the prompt that would produce it.</code><button type="button" class="copy-btn" data-copy="Here is an output I like: [...]. Write the prompt that would produce it.">Copy</button></div></details></div><div class="pg-fam"><p class="pg-fam-t">Talk and improve</p><details class="pg-tq"><summary><span class="k">11</span>AI Interview Technique</summary><p>Complex deliverables that need context. Let the model ask questions before it produces anything.</p><div class="pg-tpl"><code>Before you start, ask me up to 5 questions you need answered. Wait for my answers.</code><button type="button" class="copy-btn" data-copy="Before you start, ask me up to 5 questions you need answered. Wait for my answers.">Copy</button></div></details><details class="pg-tq"><summary><span class="k">12</span>Thought Provocation</summary><p>Challenge assumptions, stress-test an idea, find blind spots. Ask the model to argue against or critique.</p><div class="pg-tpl"><code>Argue against my plan: [...]. Give the 3 strongest objections and what evidence would settle each.</code><button type="button" class="copy-btn" data-copy="Argue against my plan: [...]. Give the 3 strongest objections and what evidence would settle each.">Copy</button></div></details><details class="pg-tq"><summary><span class="k">13</span>Meta-Prompting</summary><p>You want to improve or generate prompts themselves. The model writes or refines the prompt.</p><div class="pg-tpl"><code>Improve this prompt so it gets a better result: [prompt]. Explain what you changed.</code><button type="button" class="copy-btn" data-copy="Improve this prompt so it gets a better result: [prompt]. Explain what you changed.">Copy</button></div></details><details class="pg-tq"><summary><span class="k">14</span>Iterative Refinement</summary><p>High-stakes writing. Draft, critique, then revise in sequence.</p><div class="pg-tpl"><code>Write a draft. Critique it against [criteria]. Then rewrite it to fix the critique.</code><button type="button" class="copy-btn" data-copy="Write a draft. Critique it against [criteria]. Then rewrite it to fix the critique.">Copy</button></div></details></div></div>
+        <div class="kit-actions"><a class="kit-btn ghost" href="resources/prompting-guide/Prompting_Cheat_Sheet.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Cheat sheet (PDF, one page)</a></div>
+
+        <h3 class="ph" id="pg-teach"><span class="tag">For teachers</span>Teach it in one session</h3>
+        <p class="ph-sub">A 75-minute plan for a class, a team meeting or a workshop. Everyone leaves with one better prompt and their own assistant.</p>
+        <ol class="pg-plan"><li><span class="t">0-10 min</span><b>Warm-up</b><span class="d">Everyone writes a one-line prompt for a real task from their work, runs it, and notes what is wrong with the answer.</span></li><li><span class="t">10-25 min</span><b>The 14 techniques</b><span class="d">Walk through the four families: show, do not tell; make it reason; shape the answer; talk and improve. One live example per family.</span></li><li><span class="t">25-45 min</span><b>Prompt Coach</b><span class="d">In pairs, paste the Prompt Coach into any chatbot, give it the warm-up task, and compare the three rewritten prompts.</span></li><li><span class="t">45-60 min</span><b>Before and after</b><span class="d">Run the original and the best rewritten prompt side by side. Score both with the rubric and share the biggest jump.</span></li><li><span class="t">60-75 min</span><b>Make it yours</b><span class="d">Save the coach as a Claude Skill, Custom GPT or Gemini Gem. Each person leaves with one assistant and one improved prompt.</span></li><li><span class="t">After class</span><b>Optional</b><span class="d">Run the Colab notebook on a task of your choice and submit the PDF report it creates.</span></li></ol>
+        <div class="pg-rubric"><p><b>Before-and-after rubric.</b> Score the original and the rewritten answer from 1 to 3 on each:</p><ul><li><b>Relevance</b> Does it answer the real need?</li><li><b>Specificity</b> Is it tailored, not generic?</li><li><b>Format</b> Is it in the shape you can use?</li><li><b>Accuracy</b> Are facts and numbers right?</li><li><b>Effort to fix</b> How much editing before you can use it?</li></ul></div>
+        <div class="kit-actions"><a class="kit-btn" href="resources/prompting-guide/Facilitator_Guide.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Facilitator guide (PDF)</a><a class="kit-btn ghost" href="resources/prompting-guide/Prompting_Cheat_Sheet.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Cheat sheet</a></div>
+
+        <h3 class="ph" id="pg-files"><span class="tag">Downloads</span>Everything in the kit</h3>
+        <ul class="pg-files"><li><a href="resources/prompting-guide/Prompting_Guide_Kit.zip" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span><b>Prompting_Guide_Kit.zip</b><small>Everything below in one download</small></span><em>Full kit · 23 KB</em></a></li><li><a href="resources/prompting-guide/Facilitator_Guide.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span><b>Facilitator_Guide.pdf</b><small>The 75-minute session plan, job exercises, rubric and safe-use notes</small></span><em>For teachers · 9 KB</em></a></li><li><a href="resources/prompting-guide/Prompting_Cheat_Sheet.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span><b>Prompting_Cheat_Sheet.pdf</b><small>All 14 techniques with a template for each, on one page</small></span><em>Print and share · 5 KB</em></a></li><li><a href="resources/prompting-guide/Prompt_Coach_Instructions.txt" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span><b>Prompt_Coach_Instructions.txt</b><small>Paste into any chatbot, a Custom GPT or a Gemini Gem</small></span><em>No code · 3 KB</em></a></li><li><a href="resources/prompting-guide/Prompt_Coach_Claude_Skill.zip" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span><b>Prompt_Coach_Claude_Skill.zip</b><small>Upload to Claude as a Skill</small></span><em>Claude · 2 KB</em></a></li><li><a href="resources/prompting-guide/Prompting_Guide.ipynb" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span><b>Prompting_Guide.ipynb</b><small>The notebook: runs in Google Colab with a free Gemini key and writes a PDF report</small></span><em>Colab · 15 KB</em></a></li><li><a href="resources/prompting-guide/Sample_Output_Web_Series.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span><b>Sample_Output_Web_Series.pdf</b><small>A worked example of the report the notebook creates</small></span><em>Example · 5 KB</em></a></li></ul>
+
+        <div class="faq">
+          <details><summary>Do I need to know how to code?</summary><p>No. The Prompt Coach works by copy and paste in any chatbot. The Colab notebook is optional, for classes that want to see how the pipeline is built.</p></details>
+          <details><summary>Which AI tools does it work with?</summary><p>Any chat assistant that takes a long first message: ChatGPT, Gemini, Claude, Microsoft Copilot and others. The notebook uses Google's Gemini models.</p></details>
+          <details><summary>Does it cost anything?</summary><p>The coach works in the free versions of most chatbots. The notebook runs in free Google Colab with a Gemini API key, and Google offers a free tier for that key. Creating a Custom GPT needs a paid ChatGPT plan.</p></details>
+          <details><summary>Can I use it in my own class or company?</summary><p>Yes. Please keep the credit to Meenakshi Mangipudi and link back to this page. I would like to hear how it went.</p></details>
+          <details><summary>Who made it?</summary><p>The 14-technique pipeline was created by <a href="https://www.linkedin.com/in/meenakshimangipudi/" rel="noopener">Meenakshi Mangipudi</a>, a Masters student at Christ University, and developed into this teaching resource with Prof. Abhishek Kumar Jha.</p></details>
+        </div>
+        <p class="kit-credit">Contributor: Meenakshi Mangipudi, Masters student, Christ University. Developed with Prof. Abhishek Kumar Jha.</p>
       </article>
 
 
